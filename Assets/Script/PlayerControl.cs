@@ -11,7 +11,18 @@ public class PlayerControl : MonoBehaviour
     public float MouseSentitive;
 
     [Header("¨¤¦â°Ñ¼Æ")]
+    public Rigidbody PlayerRB;
     public float MoveSpeed;
+    public float JumpSpeed;
+    public bool CanJump;
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            CanJump = true;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +34,8 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         PlayerMove();
-        CameraControl();
-    }
-
-    void FixedUpdate()
-    {
         PlayerJump();
+        CameraControl();
     }
 
     void PlayerMove()
@@ -55,7 +62,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-
+            if (CanJump)
+            {
+                PlayerRB.AddForce(0, JumpSpeed, 0);
+                CanJump = false;
+            }
         }
     }
 
