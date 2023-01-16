@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     public float MouseSentitive;
 
     [Header("¨¤¦â°Ñ¼Æ")]
+    public PhotonView _pv;
     public Rigidbody PlayerRB;
     public float MoveSpeed;
     public float JumpSpeed;
@@ -18,9 +20,12 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (_pv.IsMine)
         {
-            CanJump = true;
+            if (collision.gameObject.tag == "Floor")
+            {
+                CanJump = true;
+            }
         }
     }
 
@@ -33,9 +38,15 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMove();
-        PlayerJump();
-        CameraControl();
+        if (_pv.IsMine)
+        {
+            PlayerMove();
+            PlayerJump();
+            CameraControl();
+
+            CameraCheck();
+            RigidbodyCheck();
+        }
     }
 
     void PlayerMove()
@@ -79,5 +90,31 @@ public class PlayerControl : MonoBehaviour
         CameraRotation += v * MouseSentitive * Time.deltaTime;
         CameraRotation = Mathf.Clamp(CameraRotation, -60f, 60f);
         PlayerCamera.transform.localEulerAngles = new Vector3(-CameraRotation, PlayerCamera.transform.localEulerAngles.y, 0);
+    }
+
+    void CameraCheck()
+    {
+        GameObject[] Cams = GameObject.FindGameObjectsWithTag("MainCamera");
+
+        foreach (GameObject cam in Cams)
+        {
+            if (!cam.GetComponent<PhotonView>().IsMine)
+            {
+                Destroy(cam);
+            }
+        }
+    }
+
+    void RigidbodyCheck()
+    {
+        GameObject[] PlayerObject = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject playerObject in PlayerObject)
+        {
+            if (!playerObject.GetComponent<PhotonView>().IsMine)
+            {
+                Destroy(playerObject.GetComponent<Rigidbody>());
+            }
+        }
     }
 }
