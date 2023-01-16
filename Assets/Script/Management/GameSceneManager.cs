@@ -12,7 +12,9 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PhotonNetwork.IsConnected == false)
+        MouseControl.CanAppear = !PhotonNetwork.IsConnected;
+
+        if (!PhotonNetwork.IsConnected)
         {
             SceneManager.LoadScene("Start Scene");
         }
@@ -20,11 +22,5 @@ public class GameSceneManager : MonoBehaviour
         {
             PhotonNetwork.Instantiate(PlayerCharacter, StartPosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].transform.position, Quaternion.identity);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

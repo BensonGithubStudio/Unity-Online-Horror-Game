@@ -20,17 +20,16 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print(1);
+        
     }
 
     public void OnClickStartGame()
     {
-        JoinRoom();
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        print(4);
         int number = Random.Range(1, 1001);
         string name = "Room" + number;
 
@@ -40,25 +39,8 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     }
 
-    public override void OnCreatedRoom()
-    {
-        JoinRoom();
-    }
-
-    public void JoinRoom()
-    {
-        PhotonNetwork.JoinRandomRoom();
-    }
-
     public override void OnJoinedRoom()
     {
-        print(2);
         SceneManager.LoadScene("Game Scene");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

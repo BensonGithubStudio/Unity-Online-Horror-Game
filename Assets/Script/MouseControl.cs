@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseControl : MonoBehaviour
 {
-    public bool CanAppear;
+    public static bool CanAppear;
 
     // Start is called before the first frame update
     void Start()
