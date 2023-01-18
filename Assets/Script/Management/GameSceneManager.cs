@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public string PlayerCharacter;
+    public string[] PlayerCharacter;
+    public int PlayerCharacterKind;
     public GameObject[] StartPosition;
 
     // Start is called before the first frame update
@@ -20,7 +21,35 @@ public class GameSceneManager : MonoBehaviour
         }
         else
         {
-            PhotonNetwork.Instantiate(PlayerCharacter, StartPosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(PlayerCharacter[PlayerCharacterKind], StartPosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].transform.position, Quaternion.identity);
+            PlayerShootSpeedSetUp();
+            PlayerShootDamageSetUp();
+            PlayerLifeSetUp();
+        }
+    }
+
+    void PlayerShootSpeedSetUp()
+    {
+        if(PlayerCharacterKind == 0)
+        {
+            this.gameObject.GetComponent<ShootControl>().ShootSpeed = 0.1f;
+        }
+    }
+
+    void PlayerShootDamageSetUp()
+    {
+        if (PlayerCharacterKind == 0)
+        {
+           this.gameObject.GetComponent<ShootControl>().BulletDamage = 10;
+        }
+    }
+
+    void PlayerLifeSetUp()
+    {
+        if (PlayerCharacterKind == 0)
+        {
+            this.gameObject.GetComponent<LifeControl>().MaxLife = 100;
+            this.gameObject.GetComponent<LifeControl>().NowLife = this.gameObject.GetComponent<LifeControl>().MaxLife;
         }
     }
 }

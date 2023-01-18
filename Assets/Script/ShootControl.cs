@@ -14,6 +14,7 @@ public class ShootControl : MonoBehaviour
     [Header("射擊管理")]
     public PhotonView _pv;
     public float ShootSpeed;
+    public int BulletDamage;
     public bool IsAimEnemy;
     public int HitPlayerID;
 
@@ -35,10 +36,9 @@ public class ShootControl : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            print(1);
             if (IsAimEnemy)
             {
-                HitSomebody(HitPlayerID);
+                HitSomebody(HitPlayerID, BulletDamage);
                 print(2);
 
                 //發射子彈而且發送敵人資訊
@@ -50,20 +50,17 @@ public class ShootControl : MonoBehaviour
         }
     }
 
-    void HitSomebody(int id)
+    void HitSomebody(int id,int Damage)
     {
-        _pv.RPC("RPCHitSomebody", RpcTarget.All, id);
+        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage);
     }
 
     [PunRPC]
-    void RPCHitSomebody(int id)
+    void RPCHitSomebody(int id,int Damage)
     {
-        if (PhotonView.Find(id).gameObject != null)
+        if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
         {
-            if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
-            {
-                PhotonNetwork.Destroy(PhotonView.Find(id).gameObject);
-            }
+            this.gameObject.GetComponent<LifeControl>().NowLife -= Damage;
         }
     }
 
