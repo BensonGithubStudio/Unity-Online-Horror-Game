@@ -39,7 +39,6 @@ public class ShootControl : MonoBehaviour
             if (IsAimEnemy)
             {
                 HitSomebody(HitPlayerID, BulletDamage);
-                print(2);
 
                 //發射子彈而且發送敵人資訊
             }
