@@ -18,6 +18,10 @@ public class PlayerControl : MonoBehaviour
     public float JumpSpeed;
     public bool CanJump;
 
+    [Header("¨¤¦âª¬ºA")]
+    public float MaxLife;
+    public float NowLife;
+
     void OnCollisionEnter(Collision collision)
     {
         if (_pv.IsMine)

@@ -60,6 +60,8 @@ MonoBehaviour:
   MoveSpeed: 5
   JumpSpeed: 200
   CanJump: 0
+  MaxLife: 0
+  NowLife: 0
 --- !u!65 &343112964943553155
 BoxCollider:
   m_ObjectHideFlags: 0
