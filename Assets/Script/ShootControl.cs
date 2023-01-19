@@ -124,6 +124,16 @@ public class ShootControl : MonoBehaviour
                     IsAimEnemy = false;
                 }
             }
+            else
+            {
+                AimStarCenter.GetComponent<Image>().color = Color.white;
+                for (int i = 0; i < 4; i++)
+                {
+                    AimStar[i].GetComponent<Image>().color = Color.white;
+                }
+
+                IsAimEnemy = false;
+            }
         }
     }
 }
