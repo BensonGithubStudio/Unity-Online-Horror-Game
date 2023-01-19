@@ -16,12 +16,17 @@ public class ShootControl : MonoBehaviour
     public float ShootSpeed;
     public int BulletDamage;
     public bool IsAimEnemy;
+    public bool IsShooting;
     public int HitPlayerID;
+
+    [Header("聲音管理")]
+    public AudioSource ShootAudioSource;
+    public AudioClip ShootSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Shoot", 0, ShootSpeed);
+        
     }
 
     // Update is called once per frame
@@ -29,23 +34,34 @@ public class ShootControl : MonoBehaviour
     {
         AimStarAnimation();
         ColorChange();
+
+        if (!IsShooting && Input.GetMouseButton(0))
+        {
+            IsShooting = true;
+            InvokeRepeating("Shoot", 0, ShootSpeed);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            IsShooting = false;
+            CancelInvoke("Shoot");
+        }
     }
 
     //玩家射擊動作
     void Shoot()
     {
-        if (Input.GetMouseButton(0))
+        if (IsAimEnemy)
         {
-            if (IsAimEnemy)
-            {
-                HitSomebody(HitPlayerID, BulletDamage);
+            HitSomebody(HitPlayerID, BulletDamage);
+            ShootAudioSource.PlayOneShot(ShootSound);
 
-                //發射子彈而且發送敵人資訊
-            }
-            else
-            {
-                //單純發射子彈
-            }
+            //發射子彈而且發送敵人資訊
+        }
+        else
+        {
+            ShootAudioSource.PlayOneShot(ShootSound);
+
+            //單純發射子彈
         }
     }
 
