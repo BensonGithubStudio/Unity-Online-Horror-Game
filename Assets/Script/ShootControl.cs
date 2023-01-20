@@ -71,6 +71,7 @@ public class ShootControl : MonoBehaviour
             if (ShootPosition != null)
             {
                 GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                bullet.transform.LookAt(HitPosition);
                 bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
                 HitSomebody(HitPlayerID, BulletDamage);
                 ShootAudioSource.PlayOneShot(ShootSound);

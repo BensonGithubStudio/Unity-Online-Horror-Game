@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class BulletControl : MonoBehaviour
 {
+    public PhotonView _pv;
     public float MoveSpeed;
 
     // Start is called before the first frame update
@@ -15,7 +16,10 @@ public class BulletControl : MonoBehaviour
 
     void DestroyBullet()
     {
-        PhotonNetwork.Destroy(this.gameObject);
+        if (_pv.IsMine)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
