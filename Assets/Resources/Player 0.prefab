@@ -571,7 +571,7 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: IsShoot
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: IsDead
   m_SynchronizeLayers:
   - SynchronizeType: 1
