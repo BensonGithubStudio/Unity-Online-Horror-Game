@@ -23,6 +23,7 @@ public class GameSceneManager : MonoBehaviour
         {
             PhotonNetwork.Instantiate(PlayerCharacter[PlayerCharacterKind], StartPosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].transform.position, Quaternion.identity);
             PlayerShootSpeedSetUp();
+            PlayerBulletSpeedSetUp();
             PlayerShootDamageSetUp();
             PlayerLifeSetUp();
         }
@@ -33,6 +34,14 @@ public class GameSceneManager : MonoBehaviour
         if(PlayerCharacterKind == 0)
         {
             this.gameObject.GetComponent<ShootControl>().ShootSpeed = 0.1f;
+        }
+    }
+
+    void PlayerBulletSpeedSetUp()
+    {
+        if (PlayerCharacterKind == 0)
+        {
+            this.gameObject.GetComponent<ShootControl>().BulletMoveSpeed = 100;
         }
     }
 

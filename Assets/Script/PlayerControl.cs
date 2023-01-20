@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviour
     public float MoveSpeed;
     public float JumpSpeed;
     public bool CanJump;
+    public GameObject PlayerGun;
 
     [Header("¨¤¦âª¬ºA")]
     public float MaxLife;
@@ -33,12 +34,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -47,6 +42,7 @@ public class PlayerControl : MonoBehaviour
             PlayerMove();
             PlayerJump();
             CameraControl();
+            GunControl();
 
             CameraCheck();
             RigidbodyCheck();
@@ -94,6 +90,17 @@ public class PlayerControl : MonoBehaviour
         CameraRotation += v * MouseSentitive * Time.deltaTime;
         CameraRotation = Mathf.Clamp(CameraRotation, -60f, 60f);
         PlayerCamera.transform.localEulerAngles = new Vector3(-CameraRotation, PlayerCamera.transform.localEulerAngles.y, 0);
+    }
+
+    void GunControl()
+    {
+        float h = Input.GetAxis("Mouse X");
+        float v = Input.GetAxis("Mouse Y");
+
+        playerController.transform.Rotate(0, h * MouseSentitive * Time.deltaTime, 0);
+        CameraRotation += v * MouseSentitive * Time.deltaTime;
+        CameraRotation = Mathf.Clamp(CameraRotation, -60f, 60f);
+        PlayerGun.transform.localEulerAngles = new Vector3(-CameraRotation, PlayerGun.transform.localEulerAngles.y, 0);
     }
 
     void CameraCheck()

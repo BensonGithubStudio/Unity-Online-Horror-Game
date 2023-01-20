@@ -19,6 +19,11 @@ public class ShootControl : MonoBehaviour
     public bool IsShooting;
     public int HitPlayerID;
 
+    [Header("子彈飛行管理")]
+    public GameObject ShootPosition;
+    public Vector3 HitPosition;
+    public float BulletMoveSpeed;
+
     [Header("聲音管理")]
     public AudioSource ShootAudioSource;
     public AudioClip ShootSound;
@@ -26,7 +31,16 @@ public class ShootControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("ShootPointCheck", 0.5f);
+    }
+
+    void ShootPointCheck()
+    {
+        GameObject shootPosition = GameObject.FindGameObjectWithTag("Shoot Point");
+        if (shootPosition.GetComponent<PhotonView>().IsMine)
+        {
+            ShootPosition = shootPosition;
+        }
     }
 
     // Update is called once per frame
@@ -52,16 +66,27 @@ public class ShootControl : MonoBehaviour
     {
         if (IsAimEnemy)
         {
-            HitSomebody(HitPlayerID, BulletDamage);
-            ShootAudioSource.PlayOneShot(ShootSound);
-
             //發射子彈而且發送敵人資訊
+
+            if (ShootPosition != null)
+            {
+                GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
+                HitSomebody(HitPlayerID, BulletDamage);
+                ShootAudioSource.PlayOneShot(ShootSound);
+            }
         }
         else
         {
-            ShootAudioSource.PlayOneShot(ShootSound);
-
             //單純發射子彈
+
+            if (ShootPosition != null)
+            {
+                GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                bullet.transform.LookAt(HitPosition);
+                bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
+                ShootAudioSource.PlayOneShot(ShootSound);
+            }
         }
     }
 
@@ -99,8 +124,11 @@ public class ShootControl : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(AimStarCenter.transform.position);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000, ~(1 << 9)))
+            LayerMask mask = LayerMask.GetMask("SceneBorder");
+            if (Physics.Raycast(ray, out hit, 10000, ~mask))
             {
+                HitPosition = hit.point;
+
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
                 if (hit.transform.gameObject.tag == "Player")
                 {

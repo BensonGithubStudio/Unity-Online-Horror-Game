@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Shoot Point
+  - Bottom
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Player
   - Floor
   - Wall
-  - 
+  - SceneBorder
   - 
   - 
   - 
