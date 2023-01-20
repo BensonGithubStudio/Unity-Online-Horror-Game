@@ -13,7 +13,7 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MouseControl.CanAppear = !PhotonNetwork.IsConnected;
+        this.gameObject.GetComponent<MouseControl>().CanAppear = !PhotonNetwork.IsConnected;
 
         if (!PhotonNetwork.IsConnected)
         {

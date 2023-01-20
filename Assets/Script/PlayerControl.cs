@@ -39,10 +39,17 @@ public class PlayerControl : MonoBehaviour
     {
         if (_pv.IsMine)
         {
-            PlayerMove();
-            PlayerJump();
-            CameraControl();
-            GunControl();
+            if (GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife > 0)
+            {
+                PlayerMove();
+                PlayerJump();
+                CameraControl();
+                GunControl();
+            }
+            else
+            {
+                PlayerCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
 
             CameraCheck();
             RigidbodyCheck();

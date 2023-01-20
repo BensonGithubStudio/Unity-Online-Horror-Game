@@ -30,6 +30,11 @@ public class PlayerAnimationControl : MonoBehaviour
             {
                 PlayerAnimator.SetBool("IsShoot", false);
             }
+
+            if(GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife <= 0)
+            {
+                PlayerAnimator.SetBool("IsDead", true);
+            }
         }
     }
 }

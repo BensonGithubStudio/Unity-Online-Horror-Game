@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseControl : MonoBehaviour
 {
-    public static bool CanAppear;
+    public bool CanAppear;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,8 @@ public class MouseControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CanAppearCheck();
+
         Cursor.visible = CanAppear;
 
         if (!CanAppear)
@@ -24,6 +26,14 @@ public class MouseControl : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    void CanAppearCheck()
+    {
+        if (this.gameObject.GetComponent<LifeControl>().NowLife <= 0)
+        {
+            CanAppear = true;
         }
     }
 }

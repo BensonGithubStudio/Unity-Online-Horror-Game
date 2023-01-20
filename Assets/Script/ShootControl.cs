@@ -46,18 +46,21 @@ public class ShootControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AimStarAnimation();
-        ColorChange();
+        if (this.gameObject.GetComponent<LifeControl>().NowLife > 0)
+        {
+            AimStarAnimation();
+            ColorChange();
 
-        if (!IsShooting && Input.GetMouseButton(0))
-        {
-            IsShooting = true;
-            InvokeRepeating("Shoot", 0, ShootSpeed);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            IsShooting = false;
-            CancelInvoke("Shoot");
+            if (!IsShooting && Input.GetMouseButton(0))
+            {
+                IsShooting = true;
+                InvokeRepeating("Shoot", 0, ShootSpeed);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                IsShooting = false;
+                CancelInvoke("Shoot");
+            }
         }
     }
 
