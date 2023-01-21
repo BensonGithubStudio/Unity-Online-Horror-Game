@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class StartManager : MonoBehaviourPunCallbacks
 {
+    public GameObject StartButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,13 +16,15 @@ public class StartManager : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsConnected)
         {
+            StartButton.SetActive(false);
+
             PhotonNetwork.ConnectUsingSettings();
         }
     }
 
     public override void OnConnectedToMaster()
     {
-        
+        StartButton.SetActive(true);
     }
 
     public void OnClickStartGame()

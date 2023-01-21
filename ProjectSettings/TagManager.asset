@@ -7,6 +7,8 @@ TagManager:
   - Floor
   - Shoot Point
   - Bottom
+  - Bullet
+  - Light
   layers:
   - Default
   - TransparentFX

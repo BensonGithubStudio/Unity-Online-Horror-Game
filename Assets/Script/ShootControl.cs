@@ -87,6 +87,8 @@ public class ShootControl : MonoBehaviour
                 bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
                 HitSomebody(HitPlayerID, BulletDamage);
                 ShootAudioSource.PlayOneShot(ShootSound);
+
+                PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
             }
         }
         else
@@ -99,6 +101,8 @@ public class ShootControl : MonoBehaviour
                 bullet.transform.LookAt(HitPosition);
                 bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
                 ShootAudioSource.PlayOneShot(ShootSound);
+
+                PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
             }
         }
     }
