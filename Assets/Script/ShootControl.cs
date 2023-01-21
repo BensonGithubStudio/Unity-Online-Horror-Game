@@ -9,7 +9,9 @@ public class ShootControl : MonoBehaviour
     [Header("準心動畫管理")]
     public Animator AimStarAnimator;
     public GameObject AimStarCenter;
+    public GameObject[] ManyAimStarCenter;
     public GameObject[] AimStar;
+    public float ShootDuringTime;
 
     [Header("射擊管理")]
     public PhotonView _pv;
@@ -51,13 +53,20 @@ public class ShootControl : MonoBehaviour
             AimStarAnimation();
             ColorChange();
 
-            if (!IsShooting && Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
-                IsShooting = true;
-                InvokeRepeating("Shoot", 0, ShootSpeed);
+                ShootDuringTime += Time.deltaTime;
+
+                if (!IsShooting)
+                {
+                    IsShooting = true;
+                    InvokeRepeating("Shoot", 0, ShootSpeed);
+                }
             }
             if (Input.GetMouseButtonUp(0))
             {
+                ShootDuringTime = 0;
+                
                 IsShooting = false;
                 CancelInvoke("Shoot");
             }
@@ -126,7 +135,17 @@ public class ShootControl : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("MainCamera") != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(AimStarCenter.transform.position);
+            Ray ray;
+            if (ShootDuringTime < 1)
+            {
+                ray = Camera.main.ScreenPointToRay(AimStarCenter.transform.position);
+            }
+            else
+            {
+                int a = Random.Range(0, ManyAimStarCenter.Length);
+                ray = Camera.main.ScreenPointToRay(ManyAimStarCenter[a].transform.position);
+            }
+
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("SceneBorder");
             if (Physics.Raycast(ray, out hit, 10000, ~mask))
