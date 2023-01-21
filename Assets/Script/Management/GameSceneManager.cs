@@ -22,10 +22,19 @@ public class GameSceneManager : MonoBehaviour
         else
         {
             PhotonNetwork.Instantiate(PlayerCharacter[PlayerCharacterKind], StartPosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].transform.position, Quaternion.identity);
+            PlayerBulletCountSetUp();
             PlayerShootSpeedSetUp();
             PlayerBulletSpeedSetUp();
             PlayerShootDamageSetUp();
             PlayerLifeSetUp();
+        }
+    }
+
+    void PlayerBulletCountSetUp()
+    {
+        if (PlayerCharacterKind == 0)
+        {
+            this.gameObject.GetComponent<ShootControl>().MaxBulletCount = 50;
         }
     }
 

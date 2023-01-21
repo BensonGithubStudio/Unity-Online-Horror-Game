@@ -7,6 +7,7 @@ public class PlayerAnimationControl : MonoBehaviour
 {
     public Animator PlayerAnimator;
     public PhotonView _pv;
+    public bool IsAddingBullet;
 
     // Update is called once per frame
     void Update()
@@ -35,6 +36,22 @@ public class PlayerAnimationControl : MonoBehaviour
             {
                 PlayerAnimator.SetBool("IsDead", true);
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (!IsAddingBullet)
+                {
+                    IsAddingBullet = true;
+                    PlayerAnimator.SetBool("IsAddingBullet", true);
+                    Invoke("FineshedAddBullet", 2);
+                }
+            }
         }
+    }
+
+    void FineshedAddBullet()
+    {
+        PlayerAnimator.SetBool("IsAddingBullet", false);
+        IsAddingBullet = false;
     }
 }

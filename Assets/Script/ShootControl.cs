@@ -13,6 +13,12 @@ public class ShootControl : MonoBehaviour
     public GameObject[] AimStar;
     public float ShootDuringTime;
 
+    [Header("槍支狀態管理")]
+    public int MaxBulletCount;
+    public int NowBulletCount;
+    public GameObject BulletCountText;
+    public bool IsAddingBullet;
+
     [Header("射擊管理")]
     public PhotonView _pv;
     public float ShootSpeed;
@@ -33,6 +39,8 @@ public class ShootControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NowBulletCount = MaxBulletCount;
+        
         Invoke("ShootPointCheck", 0.5f);
     }
 
@@ -52,6 +60,7 @@ public class ShootControl : MonoBehaviour
         {
             AimStarAnimation();
             ColorChange();
+            BulletCount();
 
             if (Input.GetMouseButton(0))
             {
@@ -70,39 +79,48 @@ public class ShootControl : MonoBehaviour
                 IsShooting = false;
                 CancelInvoke("Shoot");
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                AddBullet();
+            }
         }
     }
 
     //玩家射擊動作
     void Shoot()
     {
-        if (IsAimEnemy)
+        if (NowBulletCount > 0 && !IsAddingBullet)
         {
-            //發射子彈而且發送敵人資訊
+            NowBulletCount -= 1;
 
-            if (ShootPosition != null)
+            if (IsAimEnemy)
             {
-                GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
-                bullet.transform.LookAt(HitPosition);
-                bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
-                HitSomebody(HitPlayerID, BulletDamage);
-                ShootAudioSource.PlayOneShot(ShootSound);
+                //發射子彈而且發送敵人資訊
 
-                PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
+                if (ShootPosition != null)
+                {
+                    GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                    bullet.transform.LookAt(HitPosition);
+                    bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
+                    HitSomebody(HitPlayerID, BulletDamage);
+                    ShootAudioSource.PlayOneShot(ShootSound);
+
+                    PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
+                }
             }
-        }
-        else
-        {
-            //單純發射子彈
-
-            if (ShootPosition != null)
+            else
             {
-                GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
-                bullet.transform.LookAt(HitPosition);
-                bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
-                ShootAudioSource.PlayOneShot(ShootSound);
+                //單純發射子彈
 
-                PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
+                if (ShootPosition != null)
+                {
+                    GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                    bullet.transform.LookAt(HitPosition);
+                    bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
+                    ShootAudioSource.PlayOneShot(ShootSound);
+
+                    PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
+                }
             }
         }
     }
@@ -119,6 +137,11 @@ public class ShootControl : MonoBehaviour
         {
             this.gameObject.GetComponent<LifeControl>().NowLife -= Damage;
         }
+    }
+
+    void BulletCount()
+    {
+        BulletCountText.GetComponent<Text>().text = "" + NowBulletCount;
     }
 
     //射擊準心動畫
@@ -190,5 +213,20 @@ public class ShootControl : MonoBehaviour
                 IsAimEnemy = false;
             }
         }
+    }
+
+    void AddBullet()
+    {
+        if (!IsAddingBullet)
+        {
+            IsAddingBullet = true;
+            Invoke("FinishedAddBullet", 2);
+        }
+    }
+
+    void FinishedAddBullet()
+    {
+        NowBulletCount = MaxBulletCount;
+        IsAddingBullet = false;
     }
 }

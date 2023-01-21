@@ -573,6 +573,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsDead
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsAddingBullet
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -610,6 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 3864244734147287715}
   _pv: {fileID: 343112964943553154}
+  IsAddingBullet: 0
 --- !u!1 &343112964951573222
 GameObject:
   m_ObjectHideFlags: 0
