@@ -58,7 +58,7 @@ public class GameSceneManager : MonoBehaviour
     {
         if (PlayerCharacterKind == 0)
         {
-           this.gameObject.GetComponent<ShootControl>().BulletDamage = 10;
+           this.gameObject.GetComponent<ShootControl>().BulletDamage = 2;
         }
     }
 
