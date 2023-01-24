@@ -22,6 +22,11 @@ public class PlayerControl : MonoBehaviour
     [Header("角色狀態")]
     public float MaxLife;
     public float NowLife;
+    public bool IsWalk;
+
+    [Header("音效管理")]
+    public AudioSource PlayerAudioSource;
+    public AudioClip WalkSound;
 
     void OnCollisionEnter(Collision collision)
     {
@@ -43,6 +48,7 @@ public class PlayerControl : MonoBehaviour
             {
                 PlayerMove();
                 PlayerJump();
+                WalkControl();
                 CameraControl();
                 GunControl();
             }
@@ -75,7 +81,7 @@ public class PlayerControl : MonoBehaviour
             transform.Translate(0, 0, MoveSpeed * Time.deltaTime);
         }
     }
-    
+
     void PlayerJump()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -86,6 +92,29 @@ public class PlayerControl : MonoBehaviour
                 CanJump = false;
             }
         }
+    }
+
+    void WalkControl()
+    {
+        if (Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D)|| Input.GetKey(KeyCode.W))
+        {
+            if (!IsWalk)
+            {
+                IsWalk = true;
+                PlayWalkSound();
+            }
+        }
+        else
+        {
+            CancelInvoke("PlayWalkSound");
+            IsWalk = false;
+        }
+    }
+
+    void PlayWalkSound()
+    {
+        PlayerAudioSource.PlayOneShot(WalkSound);
+        Invoke("PlayWalkSound", (1 - MoveSpeed / 10));
     }
 
     void CameraControl()

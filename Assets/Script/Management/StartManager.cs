@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class StartManager : MonoBehaviourPunCallbacks
 {
+    public AudioSource ButtonAudioSource;
+    public AudioClip ClickSound;
+
     public GameObject StartButton;
     public GameObject SettingUI;
     public Animator SettingAnimator;
@@ -35,6 +38,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartGame()
     {
+        ButtonAudioSource.PlayOneShot(ClickSound);
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -58,12 +62,14 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         SettingUI.SetActive(true);
         SettingAnimator.SetBool("Close", false);
+        ButtonAudioSource.PlayOneShot(ClickSound);
     }
 
     public void OnClickSettingClose()
     {
         Invoke("CloseSettingUI", 0.4f);
         SettingAnimator.SetBool("Close", true);
+        ButtonAudioSource.PlayOneShot(ClickSound);
     }
     void CloseSettingUI()
     {
@@ -74,11 +80,13 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         SettingUI.SetActive(false);
         AboutUI.SetActive(true);
+        ButtonAudioSource.PlayOneShot(ClickSound);
     }
 
     public void OnClickAboutUIClose()
     {
         AboutUI.SetActive(false);
         SettingUI.SetActive(true);
+        ButtonAudioSource.PlayOneShot(ClickSound);
     }
 }
