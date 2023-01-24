@@ -27644,6 +27644,7 @@ MonoBehaviour:
   BulletMoveSpeed: 0
   ShootAudioSource: {fileID: 1827766733}
   ShootSound: {fileID: 8300000, guid: 4103d4406a4b35740b86f9822176e1e8, type: 3}
+  AddBulletSound: {fileID: 8300000, guid: 824b13c3fafd28d4c81616a3dcc2e9b4, type: 3}
 --- !u!114 &1827766731
 MonoBehaviour:
   m_ObjectHideFlags: 0

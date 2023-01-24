@@ -8,10 +8,16 @@ using UnityEngine.SceneManagement;
 public class StartManager : MonoBehaviourPunCallbacks
 {
     public GameObject StartButton;
+    public GameObject SettingUI;
+    public Animator SettingAnimator;
+    public GameObject AboutUI;
 
     // Start is called before the first frame update
     void Start()
     {
+        SettingUI.SetActive(false);
+        AboutUI.SetActive(false);
+
         PhotonNetwork.AutomaticallySyncScene = true;
 
         if (!PhotonNetwork.IsConnected)
@@ -46,5 +52,33 @@ public class StartManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         SceneManager.LoadScene("Game Scene");
+    }
+
+    public void OnClickSetting()
+    {
+        SettingUI.SetActive(true);
+        SettingAnimator.SetBool("Close", false);
+    }
+
+    public void OnClickSettingClose()
+    {
+        Invoke("CloseSettingUI", 0.4f);
+        SettingAnimator.SetBool("Close", true);
+    }
+    void CloseSettingUI()
+    {
+        SettingUI.SetActive(false);
+    }
+
+    public void OnClickAboutUI()
+    {
+        SettingUI.SetActive(false);
+        AboutUI.SetActive(true);
+    }
+
+    public void OnClickAboutUIClose()
+    {
+        AboutUI.SetActive(false);
+        SettingUI.SetActive(true);
     }
 }

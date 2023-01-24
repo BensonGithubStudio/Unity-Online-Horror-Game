@@ -35,6 +35,7 @@ public class ShootControl : MonoBehaviour
     [Header("聲音管理")]
     public AudioSource ShootAudioSource;
     public AudioClip ShootSound;
+    public AudioClip AddBulletSound;
 
     // Start is called before the first frame update
     void Start()
@@ -220,6 +221,7 @@ public class ShootControl : MonoBehaviour
         if (!IsAddingBullet)
         {
             IsAddingBullet = true;
+            ShootAudioSource.PlayOneShot(AddBulletSound);
             Invoke("FinishedAddBullet", 2);
         }
     }
