@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class HitSmokeControl : MonoBehaviour
+public class ShootSoundControl : MonoBehaviour
 {
     public PhotonView _pv;
 
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DestroyHitSmoke", 2);
+        Invoke("DestroyShootSound", 1);
     }
 
-    void DestroyHitSmoke()
+    void DestroyShootSound()
     {
         if (_pv.IsMine)
         {

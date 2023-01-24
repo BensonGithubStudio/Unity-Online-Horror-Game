@@ -33,8 +33,8 @@ public class ShootControl : MonoBehaviour
     public float BulletMoveSpeed;
 
     [Header("聲音管理")]
+    public static float ShootPitch;
     public AudioSource ShootAudioSource;
-    public AudioClip ShootSound;
     public AudioClip AddBulletSound;
 
     // Start is called before the first frame update
@@ -43,6 +43,11 @@ public class ShootControl : MonoBehaviour
         NowBulletCount = MaxBulletCount;
         
         Invoke("ShootPointCheck", 0.5f);
+
+        if (ShootPitch == 0)
+        {
+            ShootPitch = Random.Range(0.6f, 1.3f);
+        }
     }
 
     void ShootPointCheck()
@@ -101,10 +106,11 @@ public class ShootControl : MonoBehaviour
                 if (ShootPosition != null)
                 {
                     GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                    GameObject shootSound = PhotonNetwork.Instantiate("Shoot Sound", ShootPosition.transform.position, Quaternion.identity);
                     bullet.transform.LookAt(HitPosition);
                     bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
+                    shootSound.GetComponent<AudioSource>().pitch = ShootPitch;
                     HitSomebody(HitPlayerID, BulletDamage);
-                    ShootAudioSource.PlayOneShot(ShootSound);
 
                     PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
                 }
@@ -116,9 +122,10 @@ public class ShootControl : MonoBehaviour
                 if (ShootPosition != null)
                 {
                     GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                    GameObject shootSound = PhotonNetwork.Instantiate("Shoot Sound", ShootPosition.transform.position, Quaternion.identity);
                     bullet.transform.LookAt(HitPosition);
                     bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
-                    ShootAudioSource.PlayOneShot(ShootSound);
+                    shootSound.GetComponent<AudioSource>().pitch = ShootPitch;
 
                     PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
                 }
