@@ -19,6 +19,7 @@ public class OilBottleEffect : MonoBehaviour
             {
                 PhotonNetwork.Instantiate("Explosion Red", this.gameObject.transform.position, Quaternion.identity);
                 PhotonNetwork.Instantiate("Explosion Blue", this.gameObject.transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate("Bomb Sound", this.gameObject.transform.position, Quaternion.identity);
             }
 
             Destroy(this.gameObject);

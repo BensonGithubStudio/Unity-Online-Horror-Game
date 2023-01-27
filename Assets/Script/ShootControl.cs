@@ -13,6 +13,10 @@ public class ShootControl : MonoBehaviour
     public GameObject[] AimStar;
     public float ShootDuringTime;
 
+    [Header("倍鏡準心動畫管理")]
+    public Animator BigAimStarAnimator;
+    public bool IsBigAim;
+
     [Header("槍支狀態管理")]
     public int MaxBulletCount;
     public int NowBulletCount;
@@ -88,6 +92,19 @@ public class ShootControl : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 AddBullet();
+            }
+            if (Input.GetKeyDown(KeyCode.CapsLock))
+            {
+                if (IsBigAim)
+                {
+                    IsBigAim = false;
+                    BigAimStarAnimator.SetBool("IsAim", false);
+                }
+                else
+                {
+                    IsBigAim = true;
+                    BigAimStarAnimator.SetBool("IsAim", true);
+                }
             }
         }
     }

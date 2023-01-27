@@ -126,6 +126,41 @@ public class PlayerControl : MonoBehaviour
         CameraRotation += v * MouseSentitive * Time.deltaTime;
         CameraRotation = Mathf.Clamp(CameraRotation, -60f, 60f);
         PlayerCamera.transform.localEulerAngles = new Vector3(-CameraRotation, PlayerCamera.transform.localEulerAngles.y, 0);
+
+        if(GameObject.Find("Game Control").GetComponent<ShootControl>().IsBigAim)
+        {
+            CancelInvoke("CameraFar");
+            InvokeRepeating("CameraClose", 0, 0.1f);
+        }
+        else
+        {
+            CancelInvoke("CameraClose");
+            InvokeRepeating("CameraFar", 0, 0.1f);
+        }
+    }
+
+    void CameraClose()
+    {
+        if (PlayerCamera.GetComponent<Camera>().fieldOfView > 20)
+        {
+            PlayerCamera.GetComponent<Camera>().fieldOfView -= 1;
+        }
+        else
+        {
+            CancelInvoke("CameraClose");
+        }
+    }
+
+    void CameraFar()
+    {
+        if (PlayerCamera.GetComponent<Camera>().fieldOfView < 60)
+        {
+            PlayerCamera.GetComponent<Camera>().fieldOfView += 1;
+        }
+        else
+        {
+            CancelInvoke("CameraFar");
+        }
     }
 
     void GunControl()
