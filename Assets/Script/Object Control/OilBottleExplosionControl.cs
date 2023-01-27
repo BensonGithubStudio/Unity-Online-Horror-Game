@@ -10,7 +10,7 @@ public class OilBottleExplosionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DestroyExplosion", 5);
+        Invoke("DestroyExplosion", 1.5f);
     }
 
     void DestroyExplosion()

@@ -23,6 +23,7 @@ public class PlayerControl : MonoBehaviour
     public float MaxLife;
     public float NowLife;
     public bool IsWalk;
+    public float BombHurtTime;
 
     [Header("音效管理")]
     public AudioSource PlayerAudioSource;
@@ -39,11 +40,25 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Hurt Point")
+        {
+            if (BombHurtTime > 2)
+            {
+                GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife -= 30;
+                BombHurtTime = 0;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (_pv.IsMine)
         {
+            BombHurtTime += Time.deltaTime;
+
             if (GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife > 0)
             {
                 PlayerMove();

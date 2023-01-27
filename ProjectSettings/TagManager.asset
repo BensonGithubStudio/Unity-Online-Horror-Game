@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Light
   - Oil Bottle
+  - Hurt Point
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Wall
   - SceneBorder
   - Oil Bottle
-  - 
+  - Hurt Point
   - 
   - 
   - 
