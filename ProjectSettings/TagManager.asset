@@ -9,6 +9,7 @@ TagManager:
   - Bottom
   - Bullet
   - Light
+  - Oil Bottle
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Floor
   - Wall
   - SceneBorder
-  - 
+  - Oil Bottle
   - 
   - 
   - 

@@ -187,7 +187,7 @@ public class ShootControl : MonoBehaviour
             {
                 HitPosition = hit.point;
 
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
+                //如果碰到玩家
                 if (hit.transform.gameObject.tag == "Player")
                 {
                     AimStarCenter.GetComponent<Image>().color = Color.red;
@@ -209,6 +209,25 @@ public class ShootControl : MonoBehaviour
 
                     IsAimEnemy = false;
                 }
+
+                //如果碰到油桶
+                if (hit.transform.gameObject.tag == "Oil Bottle")
+                {
+                    if (Input.GetMouseButton(0))
+                    {
+                        if (NowBulletCount > 0)
+                        {
+                            int num = hit.transform.gameObject.GetComponent<OilBottleEffect>().OilBottleNumber;
+                            HitOilBottle(num);
+                        }
+                    }
+
+                    AimStarCenter.GetComponent<Image>().color = Color.red;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        AimStar[i].GetComponent<Image>().color = Color.red;
+                    }
+                }
             }
             else
             {
@@ -220,6 +239,22 @@ public class ShootControl : MonoBehaviour
 
                 IsAimEnemy = false;
             }
+        }
+    }
+
+    void HitOilBottle(int number)
+    {
+        _pv.RPC("RPCHitOilBottle", RpcTarget.All, number);
+    }
+
+    [PunRPC]
+    void RPCHitOilBottle(int number)
+    {
+        GameObject[] bottles = GameObject.FindGameObjectsWithTag("Oil Bottle");
+
+        foreach (GameObject bottle in bottles)
+        {
+            bottle.GetComponent<OilBottleEffect>().HitNumber = number;
         }
     }
 
