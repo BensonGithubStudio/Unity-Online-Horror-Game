@@ -41,6 +41,12 @@ public class ShootControl : MonoBehaviour
     public AudioSource ShootAudioSource;
     public AudioClip AddBulletSound;
 
+    [Header("相機震動管理")]
+    public GameObject PlayerCamera;
+    public int ShakeTimes;
+    public float ShakeWave;
+    public float NowShakeWave;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -235,6 +241,7 @@ public class ShootControl : MonoBehaviour
                         if (NowBulletCount > 0)
                         {
                             int num = hit.transform.gameObject.GetComponent<OilBottleEffect>().OilBottleNumber;
+                            CameraShake();
                             HitOilBottle(num);
                         }
                     }
@@ -289,5 +296,43 @@ public class ShootControl : MonoBehaviour
     {
         NowBulletCount = MaxBulletCount;
         IsAddingBullet = false;
+    }
+
+    void CameraShake()
+    {
+        GameObject[] cams = GameObject.FindGameObjectsWithTag("MainCamera");
+
+        foreach(GameObject cam in cams)
+        {
+            if (cam.GetComponent<PhotonView>().IsMine)
+            {
+                PlayerCamera = cam;
+            }
+        }
+
+        NowShakeWave = ShakeWave;
+        Shake();
+    }
+
+    void Shake()
+    {
+        PlayerCamera.transform.localPosition = new Vector3(0, 0, 0);
+        Invoke("Shake2", 0.05f);
+    }
+
+    void Shake2()
+    {
+        PlayerCamera.transform.localPosition = new Vector3(NowShakeWave, NowShakeWave, NowShakeWave);
+
+        if (ShakeTimes < 20)
+        {
+            NowShakeWave -= NowShakeWave / 3;
+            ShakeTimes += 1;
+            Invoke("Shake", 0.05f);
+        }
+        else
+        {
+            ShakeTimes = 0;
+        }
     }
 }

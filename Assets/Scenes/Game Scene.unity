@@ -31172,6 +31172,10 @@ MonoBehaviour:
   BulletMoveSpeed: 0
   ShootAudioSource: {fileID: 1827766733}
   AddBulletSound: {fileID: 8300000, guid: 824b13c3fafd28d4c81616a3dcc2e9b4, type: 3}
+  PlayerCamera: {fileID: 0}
+  ShakeTimes: 0
+  ShakeWave: 1.5
+  NowShakeWave: 0
 --- !u!114 &1827766731
 MonoBehaviour:
   m_ObjectHideFlags: 0

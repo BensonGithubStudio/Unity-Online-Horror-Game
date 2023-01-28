@@ -145,12 +145,16 @@ public class PlayerControl : MonoBehaviour
         if(GameObject.Find("Game Control").GetComponent<ShootControl>().IsBigAim)
         {
             CancelInvoke("CameraFar");
-            InvokeRepeating("CameraClose", 0, 0.1f);
+            InvokeRepeating("CameraClose", 0, 0.2f);
+
+            MouseSentitive = 20;
         }
         else
         {
             CancelInvoke("CameraClose");
-            InvokeRepeating("CameraFar", 0, 0.1f);
+            InvokeRepeating("CameraFar", 0, 0.2f);
+
+            MouseSentitive = 200;
         }
     }
 
