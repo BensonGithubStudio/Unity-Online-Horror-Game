@@ -57,36 +57,4 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("Game Scene");
     }
-
-    public void OnClickSetting()
-    {
-        SettingUI.SetActive(true);
-        SettingAnimator.SetBool("Close", false);
-        ButtonAudioSource.PlayOneShot(ClickSound);
-    }
-
-    public void OnClickSettingClose()
-    {
-        Invoke("CloseSettingUI", 0.4f);
-        SettingAnimator.SetBool("Close", true);
-        ButtonAudioSource.PlayOneShot(ClickSound);
-    }
-    void CloseSettingUI()
-    {
-        SettingUI.SetActive(false);
-    }
-
-    public void OnClickAboutUI()
-    {
-        SettingUI.SetActive(false);
-        AboutUI.SetActive(true);
-        ButtonAudioSource.PlayOneShot(ClickSound);
-    }
-
-    public void OnClickAboutUIClose()
-    {
-        AboutUI.SetActive(false);
-        SettingUI.SetActive(true);
-        ButtonAudioSource.PlayOneShot(ClickSound);
-    }
 }
