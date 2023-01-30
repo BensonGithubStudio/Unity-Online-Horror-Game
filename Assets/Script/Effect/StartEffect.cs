@@ -17,7 +17,7 @@ public class StartEffect : MonoBehaviourPunCallbacks
     void Start()
     {
         if (IsFirstTimePlay) {
-            Invoke("DestroyAwakeBackground", 1);
+            Invoke("DestroyAwakeBackground", 3);
             IsFirstTimePlay = false;
         }
         else
