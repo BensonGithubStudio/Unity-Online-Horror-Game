@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    public AudioSource BackgroundMusicAudioSource;
+
     public string[] PlayerCharacter;
     public int PlayerCharacterKind;
     public GameObject[] StartPosition;
@@ -13,6 +15,7 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BackgroundMusicAudioSource.volume = StartControl.MusicVolume;
         this.gameObject.GetComponent<MouseControl>().CanAppear = !PhotonNetwork.IsConnected;
 
         if (!PhotonNetwork.IsConnected)

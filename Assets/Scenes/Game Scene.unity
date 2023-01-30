@@ -31102,6 +31102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a6af2cf143ffe45a49337642f051ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BackgroundMusicAudioSource: {fileID: 1172282435}
   PlayerCharacter:
   - Player 0
   PlayerCharacterKind: 0

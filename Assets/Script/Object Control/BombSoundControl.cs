@@ -10,6 +10,8 @@ public class BombSoundControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.GetComponent<AudioSource>().volume = StartControl.SoundVolume;
+
         Invoke("DestroyBombSound", 5);
     }
 

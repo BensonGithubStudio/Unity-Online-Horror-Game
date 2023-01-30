@@ -18,20 +18,41 @@ public class StartControl : MonoBehaviour
     public Slider MusicSlider;
     public Slider SoundSlider;
     public Slider QualitySlider;
+    public Slider MouseSentitiveSlider;
+    public Slider AimMouseSentitiveSlider;
 
     [Header("參數設定")]
-    public static float MusicValue;
-    public static float SoundValue;
-    public static int QualityNumber;
+    public static float MusicVolume = 1;
+    public static float SoundVolume = 1;
+    public static int QualityNumber = 5;
+    public static float MouseSentitive = 200;
+    public static float AimMouseSentitive = 20;
+
+    void Start()
+    {
+        MusicSlider.value = MusicVolume;
+        SoundSlider.value = SoundVolume;
+        QualitySlider.value = QualityNumber;
+        MouseSentitiveSlider.value = MouseSentitive;
+        AimMouseSentitiveSlider.value = AimMouseSentitive;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        MusicAudioSource.volume = MusicSlider.value;
-        ButtonAudioSource.volume = SoundSlider.value;
+        //聲音設定
+        MusicVolume = MusicSlider.value;
+        MusicAudioSource.volume = MusicVolume;
+        SoundVolume = SoundSlider.value;
+        ButtonAudioSource.volume = SoundVolume;
 
+        //畫質設定
         QualityNumber = (int)QualitySlider.value;
         QualitySettings.SetQualityLevel(QualityNumber);
+
+        //滑鼠靈敏度設定
+        MouseSentitive = MouseSentitiveSlider.value;
+        AimMouseSentitive = AimMouseSentitiveSlider.value;
     }
 
     public void OnClickStory()
@@ -53,7 +74,7 @@ public class StartControl : MonoBehaviour
 
     public void OnClickSettingClose()
     {
-        Invoke("CloseSettingUI", 0.4f);
+        Invoke("CloseSettingUI", 0.6f);
         SettingAnimator.SetBool("Close", true);
         ButtonAudioSource.PlayOneShot(ClickSound);
     }
@@ -74,5 +95,38 @@ public class StartControl : MonoBehaviour
         AboutUI.SetActive(false);
         SettingUI.SetActive(true);
         ButtonAudioSource.PlayOneShot(ClickSound);
+    }
+
+    //設定內按鈕
+    public void OnClickAudio()
+    {
+        SettingAnimator.SetBool("IsAudio", true);
+        SettingAnimator.SetBool("IsQuality", false);
+        SettingAnimator.SetBool("IsMouse", false);
+        SettingAnimator.SetBool("IsOther", false);
+    }
+
+    public void OnClickScreenQuality()
+    {
+        SettingAnimator.SetBool("IsAudio", false);
+        SettingAnimator.SetBool("IsQuality", true);
+        SettingAnimator.SetBool("IsMouse", false);
+        SettingAnimator.SetBool("IsOther", false);
+    }
+
+    public void OnClickMouseSentitive()
+    {
+        SettingAnimator.SetBool("IsAudio", false);
+        SettingAnimator.SetBool("IsQuality", false);
+        SettingAnimator.SetBool("IsMouse", true);
+        SettingAnimator.SetBool("IsOther", false);
+    }
+
+    public void OnClickOther()
+    {
+        SettingAnimator.SetBool("IsAudio", false);
+        SettingAnimator.SetBool("IsQuality", false);
+        SettingAnimator.SetBool("IsMouse", false);
+        SettingAnimator.SetBool("IsOther", true);
     }
 }

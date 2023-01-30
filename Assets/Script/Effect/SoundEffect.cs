@@ -19,6 +19,7 @@ public class SoundEffect : MonoBehaviour
 
     void PlaySound()
     {
+        SoundAudioSource.volume = StartControl.SoundVolume;
         SoundAudioSource.Play();
 
         float a = Random.Range(Time1, Time2);

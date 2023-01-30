@@ -52,6 +52,11 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        MouseSentitive = StartControl.MouseSentitive;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -128,6 +133,7 @@ public class PlayerControl : MonoBehaviour
 
     void PlayWalkSound()
     {
+        PlayerAudioSource.volume = StartControl.SoundVolume;
         PlayerAudioSource.PlayOneShot(WalkSound);
         Invoke("PlayWalkSound", (1 - MoveSpeed / 10));
     }
@@ -147,14 +153,14 @@ public class PlayerControl : MonoBehaviour
             CancelInvoke("CameraFar");
             InvokeRepeating("CameraClose", 0, 0.02f);
 
-            MouseSentitive = 20;
+            MouseSentitive = StartControl.AimMouseSentitive;
         }
         else
         {
             CancelInvoke("CameraClose");
             InvokeRepeating("CameraFar", 0, 0.02f);
 
-            MouseSentitive = 200;
+            MouseSentitive = StartControl.MouseSentitive;
         }
     }
 
