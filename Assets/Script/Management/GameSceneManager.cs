@@ -12,6 +12,15 @@ public class GameSceneManager : MonoBehaviour
     public int PlayerCharacterKind;
     public GameObject[] StartPosition;
 
+    [Header("角色初始值設定")]
+    public int[] MaxBulletCount;
+    public float[] ShootSpeed;
+    public float[] BulletMoveSpeed;
+    public int[] BulletDamage;
+    public int[] MaxLife;
+    public int[] MaxEnergy;
+    public int[] MaxSuper;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,47 +39,45 @@ public class GameSceneManager : MonoBehaviour
             PlayerBulletSpeedSetUp();
             PlayerShootDamageSetUp();
             PlayerLifeSetUp();
+            PlayerEnergySetUp();
+            SuperBulletSetUp();
         }
     }
 
     void PlayerBulletCountSetUp()
     {
-        if (PlayerCharacterKind == 0)
-        {
-            this.gameObject.GetComponent<ShootControl>().MaxBulletCount = 50;
-        }
+        this.gameObject.GetComponent<ShootControl>().MaxBulletCount = MaxBulletCount[PlayerCharacterKind];
     }
 
     void PlayerShootSpeedSetUp()
     {
-        if(PlayerCharacterKind == 0)
-        {
-            this.gameObject.GetComponent<ShootControl>().ShootSpeed = 0.1f;
-        }
+        this.gameObject.GetComponent<ShootControl>().ShootSpeed = ShootSpeed[PlayerCharacterKind];
     }
 
     void PlayerBulletSpeedSetUp()
     {
-        if (PlayerCharacterKind == 0)
-        {
-            this.gameObject.GetComponent<ShootControl>().BulletMoveSpeed = 100;
-        }
+        this.gameObject.GetComponent<ShootControl>().BulletMoveSpeed = BulletMoveSpeed[PlayerCharacterKind];
     }
 
     void PlayerShootDamageSetUp()
     {
-        if (PlayerCharacterKind == 0)
-        {
-           this.gameObject.GetComponent<ShootControl>().BulletDamage = 2;
-        }
+        this.gameObject.GetComponent<ShootControl>().BulletDamage = BulletDamage[PlayerCharacterKind];
     }
 
     void PlayerLifeSetUp()
     {
-        if (PlayerCharacterKind == 0)
-        {
-            this.gameObject.GetComponent<LifeControl>().MaxLife = 100;
-            this.gameObject.GetComponent<LifeControl>().NowLife = this.gameObject.GetComponent<LifeControl>().MaxLife;
-        }
+        this.gameObject.GetComponent<LifeControl>().MaxLife = MaxLife[PlayerCharacterKind];
+        this.gameObject.GetComponent<LifeControl>().NowLife = this.gameObject.GetComponent<LifeControl>().MaxLife;
+    }
+
+    void PlayerEnergySetUp()
+    {
+        this.gameObject.GetComponent<EnergyControl>().MaxEnergy = MaxEnergy[PlayerCharacterKind];
+        this.gameObject.GetComponent<EnergyControl>().NowEnergy = this.gameObject.GetComponent<EnergyControl>().MaxEnergy;
+    }
+
+    void SuperBulletSetUp()
+    {
+        this.gameObject.GetComponent<SuperBulletControl>().MaxSuper = MaxSuper[PlayerCharacterKind];
     }
 }

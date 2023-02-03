@@ -22,10 +22,10 @@ public class HitEffect : MonoBehaviour
 
         if (NowLife < LateLife)
         {
+            CancelInvoke("DestroyHitImage");
             HitImage.SetActive(false);
             HitImage.SetActive(true);
-            CancelInvoke("DestroyHitImage");
-            Invoke("DestroyHitImage", 1);
+            Invoke("DestroyHitImage", 1.5f);
         }
 
         LateLife = GameControlObject.GetComponent<LifeControl>().NowLife;

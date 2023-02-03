@@ -25,8 +25,16 @@ public class StartEffect : MonoBehaviourPunCallbacks
             DestroyAwakeBackground();
         }
 
-        LoadintText.SetActive(true);
-        StartButton.SetActive(false);
+        if (!PhotonNetwork.IsConnected)
+        {
+            LoadintText.SetActive(true);
+            StartButton.SetActive(false);
+        }
+        else
+        {
+            LoadintText.SetActive(false);
+            StartButton.SetActive(true);
+        }
     }
 
     void DestroyAwakeBackground()

@@ -25,8 +25,6 @@ public class StartManager : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsConnected)
         {
-            StartButton.SetActive(false);
-
             PhotonNetwork.ConnectUsingSettings();
         }
     }

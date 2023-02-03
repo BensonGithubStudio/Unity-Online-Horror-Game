@@ -135,6 +135,11 @@ public class ShootControl : MonoBehaviour
                     shootSound.GetComponent<AudioSource>().pitch = ShootPitch;
                     HitSomebody(HitPlayerID, BulletDamage);
 
+                    if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper < this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
+                    {
+                        this.gameObject.GetComponent<SuperBulletControl>().NowSuper += 10;
+                    }
+
                     PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
                 }
             }

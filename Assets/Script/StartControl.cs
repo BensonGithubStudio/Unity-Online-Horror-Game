@@ -74,11 +74,25 @@ public class StartControl : MonoBehaviour
         ButtonAudioSource.PlayOneShot(ClickSound);
         TransitionUI.SetActive(false);
         TransitionUI.SetActive(true);
+        InvokeRepeating("BackgroundMusicControl", 0, 0.02f);
         Invoke("ChangeToStoryScene", 2);
+    }
+
+    void BackgroundMusicControl()
+    {
+        if (MusicSlider.value > 0)
+        {
+            MusicSlider.value -= 0.02f;
+        }
+        else
+        {
+            CancelInvoke("BackgroundMusicControl");
+        }
     }
 
     void ChangeToStoryScene()
     {
+        MusicVolume = 1;
         SceneManager.LoadScene("Story Scene");
     }
 
