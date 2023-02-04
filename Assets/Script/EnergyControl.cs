@@ -34,7 +34,10 @@ public class EnergyControl : MonoBehaviour
 
     void AddLife()
     {
-        NowEnergy -= 2;
-        this.gameObject.GetComponent<LifeControl>().NowLife += 2;
+        if (NowEnergy > 0)
+        {
+            NowEnergy -= 2;
+            this.gameObject.GetComponent<LifeControl>().NowLife += 2;
+        }
     }
 }

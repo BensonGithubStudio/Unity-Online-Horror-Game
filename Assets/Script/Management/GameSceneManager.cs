@@ -20,6 +20,7 @@ public class GameSceneManager : MonoBehaviour
     public int[] MaxLife;
     public int[] MaxEnergy;
     public int[] MaxSuper;
+    public int[] SuperDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +42,7 @@ public class GameSceneManager : MonoBehaviour
             PlayerLifeSetUp();
             PlayerEnergySetUp();
             SuperBulletSetUp();
+            SuperBulletDamageSetUp();
         }
     }
 
@@ -79,5 +81,10 @@ public class GameSceneManager : MonoBehaviour
     void SuperBulletSetUp()
     {
         this.gameObject.GetComponent<SuperBulletControl>().MaxSuper = MaxSuper[PlayerCharacterKind];
+    }
+
+    void SuperBulletDamageSetUp()
+    {
+        this.gameObject.GetComponent<SuperBulletControl>().SuperDamage = SuperDamage[PlayerCharacterKind];
     }
 }

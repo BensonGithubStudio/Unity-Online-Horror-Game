@@ -12,6 +12,9 @@ public class UIControl : MonoBehaviourPunCallbacks
 
     [Header("遊戲介面")]
     public GameObject ExitGameButton;
+    public GameObject PlayerCountText;
+    public GameObject ShootCountText;
+    public GameObject HitCountText;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,13 @@ public class UIControl : MonoBehaviourPunCallbacks
             PlayerIsDead = true;
             ExitGameButton.SetActive(true);
         }
+
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PlayerCountText.GetComponent<Text>().text = "目前人數：" + PhotonNetwork.CurrentRoom.PlayerCount + "人";
+        }
+        ShootCountText.GetComponent<Text>().text = "射擊次數：" + this.gameObject.GetComponent<ShootControl>().ShootTimes + "次";
+        HitCountText.GetComponent<Text>().text = "擊中次數：" + this.gameObject.GetComponent<ShootControl>().HitTimes + "次";
     }
 
     public void OnClickExitGame()

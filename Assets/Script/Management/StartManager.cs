@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartManager : MonoBehaviourPunCallbacks
 {
@@ -36,6 +37,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartGame()
     {
+        StartButton.GetComponent<Button>().interactable = false;
         ButtonAudioSource.PlayOneShot(ClickSound);
         PhotonNetwork.JoinRandomRoom();
     }

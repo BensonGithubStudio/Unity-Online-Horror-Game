@@ -31,6 +31,15 @@ public class ShootControl : MonoBehaviour
     public bool IsShooting;
     public int HitPlayerID;
 
+    [Header("射擊資料")]
+    public int ShootTimes;
+    public int HitTimes;
+
+    [Header("超級炸彈管理")]
+    public Animator SuperBulletAnimator;
+    public int SuperBulletDamage;
+    public bool IsSuperState;
+
     [Header("子彈飛行管理")]
     public GameObject ShootPosition;
     public Vector3 HitPosition;
@@ -112,6 +121,24 @@ public class ShootControl : MonoBehaviour
                     BigAimStarAnimator.SetBool("IsAim", true);
                 }
             }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper >= this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
+                {
+                    if (IsSuperState)
+                    {
+                        IsSuperState = false;
+                        SuperBulletAnimator.SetBool("SuperState", false);
+                        BulletCountText.GetComponent<Text>().color = Color.white;
+                    }
+                    else
+                    {
+                        IsSuperState = true;
+                        SuperBulletAnimator.SetBool("SuperState", true);
+                        BulletCountText.GetComponent<Text>().color = Color.red;
+                    }
+                }
+            }
         }
     }
 
@@ -120,58 +147,73 @@ public class ShootControl : MonoBehaviour
     {
         if (NowBulletCount > 0 && !IsAddingBullet)
         {
+            //發射子彈
             NowBulletCount -= 1;
+            ShootTimes += 1;
 
-            if (IsAimEnemy)
+            if (ShootPosition != null)
             {
-                //發射子彈而且發送敵人資訊
-
-                if (ShootPosition != null)
+                if (IsAimEnemy)
                 {
-                    GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
-                    GameObject shootSound = PhotonNetwork.Instantiate("Shoot Sound", ShootPosition.transform.position, Quaternion.identity);
-                    bullet.transform.LookAt(HitPosition);
-                    bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
-                    shootSound.GetComponent<AudioSource>().pitch = ShootPitch;
-                    HitSomebody(HitPlayerID, BulletDamage);
-
-                    if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper < this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
+                    //發送敵人資訊
+                    if (ShootPosition != null)
                     {
-                        this.gameObject.GetComponent<SuperBulletControl>().NowSuper += 10;
+                        HitTimes += 1;
+
+                        int superDamage = this.gameObject.GetComponent<SuperBulletControl>().SuperDamage;
+                        HitSomebody(HitPlayerID, BulletDamage, IsSuperState, superDamage);
+
+                        if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper < this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
+                        {
+                            this.gameObject.GetComponent<SuperBulletControl>().NowSuper += 10;
+                        }
                     }
-
-                    PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
                 }
-            }
-            else
-            {
-                //單純發射子彈
 
-                if (ShootPosition != null)
+                if (IsSuperState)
+                {
+                    IsSuperState = false;
+                    this.gameObject.GetComponent<SuperBulletControl>().NowSuper = 0;
+                    BulletCountText.GetComponent<Text>().color = Color.white;
+                    SuperBulletAnimator.SetBool("SuperState", false);
+
+                    GameObject bullet = PhotonNetwork.Instantiate("Super Player Bullet", ShootPosition.transform.position, Quaternion.identity);
+                    PhotonNetwork.Instantiate("Bomb Sound", ShootPosition.transform.position, Quaternion.identity);
+                    bullet.transform.LookAt(HitPosition);
+                    bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed / 2;
+                }
+                else
                 {
                     GameObject bullet = PhotonNetwork.Instantiate("Player Bullet", ShootPosition.transform.position, Quaternion.identity);
                     GameObject shootSound = PhotonNetwork.Instantiate("Shoot Sound", ShootPosition.transform.position, Quaternion.identity);
                     bullet.transform.LookAt(HitPosition);
                     bullet.GetComponent<BulletControl>().MoveSpeed = BulletMoveSpeed;
                     shootSound.GetComponent<AudioSource>().pitch = ShootPitch;
-
-                    PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
                 }
+
+                PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
             }
         }
     }
 
-    void HitSomebody(int id,int Damage)
+    void HitSomebody(int id, int Damage, bool SuperState, int SuperDamage)
     {
-        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage);
+        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage, SuperState, SuperDamage);
     }
 
     [PunRPC]
-    void RPCHitSomebody(int id,int Damage)
+    void RPCHitSomebody(int id, int Damage, bool SuperState, int SuperDamage)
     {
         if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
         {
-            this.gameObject.GetComponent<LifeControl>().NowLife -= Damage;
+            if (SuperState)
+            {
+                this.gameObject.GetComponent<LifeControl>().NowLife -= SuperDamage;
+            }
+            else
+            {
+                this.gameObject.GetComponent<LifeControl>().NowLife -= Damage;
+            }
         }
     }
 
