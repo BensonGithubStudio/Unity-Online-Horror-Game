@@ -22,6 +22,7 @@ public class StartControl : MonoBehaviour
     public Slider QualitySlider;
     public Slider MouseSentitiveSlider;
     public Slider AimMouseSentitiveSlider;
+    public GameObject GameModeText;
 
     [Header("參數設定")]
     public static float MusicVolume = 1;
@@ -29,6 +30,8 @@ public class StartControl : MonoBehaviour
     public static int QualityNumber = 0;
     public static float MouseSentitive = 200;
     public static float AimMouseSentitive = 20;
+    public static int GameMode = 0;
+    public string[] GameModeWord;
 
     void Start()
     {
@@ -39,6 +42,7 @@ public class StartControl : MonoBehaviour
         QualitySlider.value = QualityNumber;
         MouseSentitiveSlider.value = MouseSentitive;
         AimMouseSentitiveSlider.value = AimMouseSentitive;
+        GameModeText.GetComponent<Text>().text = GameModeWord[GameMode];
     }
 
     void PlayMusic()
@@ -174,5 +178,20 @@ public class StartControl : MonoBehaviour
         SettingAnimator.SetBool("IsQuality", false);
         SettingAnimator.SetBool("IsMouse", false);
         SettingAnimator.SetBool("IsOther", true);
+    }
+
+    public void OnClickModeChoose()
+    {
+        ButtonAudioSource.PlayOneShot(ClickSound);
+
+        if (GameMode < 3)
+        {
+            GameMode += 1;
+        }
+        else
+        {
+            GameMode = 0;
+        }
+        GameModeText.GetComponent<Text>().text = GameModeWord[GameMode];
     }
 }

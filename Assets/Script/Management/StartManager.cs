@@ -44,13 +44,46 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        int number = Random.Range(1, 1001);
-        string name = "Room" + number;
+        if (StartControl.GameMode == 0)
+        {
+            int number = Random.Range(1, 1001);
+            string name = "Room" + number;
 
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 7;
-        PhotonNetwork.CreateRoom(name, roomOptions);
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 7;
 
+            PhotonNetwork.CreateRoom(name, roomOptions);
+        }
+        else if (StartControl.GameMode == 1)
+        {
+            int number = Random.Range(1, 1001);
+            string name = "One" + number;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 2;
+
+            PhotonNetwork.CreateRoom(name, roomOptions);
+        }
+        else if (StartControl.GameMode == 2)
+        {
+            int number = Random.Range(1, 1001);
+            string name = "Two" + number;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 4;
+
+            PhotonNetwork.CreateRoom(name, roomOptions);
+        }
+        else if (StartControl.GameMode == 3)
+        {
+            int number = Random.Range(1, 1001);
+            string name = "Three" + number;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 6;
+
+            PhotonNetwork.CreateRoom(name, roomOptions);
+        }
     }
 
     public override void OnJoinedRoom()
