@@ -27,6 +27,18 @@ public class MouseControl : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (CanAppear)
+            {
+                CanAppear = false;
+            }
+            else
+            {
+                CanAppear = true;
+            }
+        }
     }
 
     void CanAppearCheck()

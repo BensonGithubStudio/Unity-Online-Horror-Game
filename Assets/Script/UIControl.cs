@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Voice;
 
 public class UIControl : MonoBehaviourPunCallbacks
 {
     [Header("玩家狀態")]
     public bool PlayerIsDead;
     public int FpsCount;
+    public bool CanRecord;
+    public bool CanSpeak;
 
     [Header("遊戲介面")]
     public GameObject ExitGameButton;
@@ -17,12 +20,21 @@ public class UIControl : MonoBehaviourPunCallbacks
     public GameObject ShootCountText;
     public GameObject HitCountText;
     public GameObject FpsText;
+    public GameObject MicrophoneButton;
+    public GameObject TrumpetButton;
+
+    [Header("Photon Voice 設定")]
+    public VoiceClient _vc;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         ExitGameButton.SetActive(false);
         InvokeRepeating("Fps", 1, 1);
+
+        CanRecord = false;
+        CanSpeak = false;
     }
 
     // Update is called once per frame
@@ -59,5 +71,33 @@ public class UIControl : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Start Scene");
+    }
+
+    public void OnClickMicrophone()
+    {
+        if (CanRecord)
+        {
+            CanRecord = false;
+            MicrophoneButton.transform.Find("Cancel Image").gameObject.SetActive(true);
+        }
+        else
+        {
+            CanRecord = true;
+            MicrophoneButton.transform.Find("Cancel Image").gameObject.SetActive(false);
+        }
+    }
+
+    public void OnClickTrumpet()
+    {
+        if (CanSpeak)
+        {
+            CanSpeak = false;
+            TrumpetButton.transform.Find("Cancel Image").gameObject.SetActive(true);
+        }
+        else
+        {
+            CanSpeak = true;
+            TrumpetButton.transform.Find("Cancel Image").gameObject.SetActive(false);
+        }
     }
 }
