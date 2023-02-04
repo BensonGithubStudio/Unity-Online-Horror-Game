@@ -11,6 +11,7 @@ TagManager:
   - Light
   - Oil Bottle
   - Hurt Point
+  - Repair
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - SceneBorder
   - Oil Bottle
   - Hurt Point
-  - 
+  - Repair
   - 
   - 
   - 

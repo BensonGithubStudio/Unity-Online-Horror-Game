@@ -9,22 +9,27 @@ public class UIControl : MonoBehaviourPunCallbacks
 {
     [Header("玩家狀態")]
     public bool PlayerIsDead;
+    public int FpsCount;
 
     [Header("遊戲介面")]
     public GameObject ExitGameButton;
     public GameObject PlayerCountText;
     public GameObject ShootCountText;
     public GameObject HitCountText;
+    public GameObject FpsText;
 
     // Start is called before the first frame update
     void Start()
     {
         ExitGameButton.SetActive(false);
+        InvokeRepeating("Fps", 1, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        FpsCount += 1;
+
         if (this.gameObject.GetComponent<LifeControl>().NowLife <= 0)
         {
             PlayerIsDead = true;
@@ -37,6 +42,12 @@ public class UIControl : MonoBehaviourPunCallbacks
         }
         ShootCountText.GetComponent<Text>().text = "射擊次數：" + this.gameObject.GetComponent<ShootControl>().ShootTimes + "次";
         HitCountText.GetComponent<Text>().text = "擊中次數：" + this.gameObject.GetComponent<ShootControl>().HitTimes + "次";
+    }
+
+    void Fps()
+    {
+        FpsText.GetComponent<Text>().text = "FPS：" + FpsCount;
+        FpsCount = 0;
     }
 
     public void OnClickExitGame()

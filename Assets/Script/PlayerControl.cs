@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
     public float NowLife;
     public bool IsWalk;
     public float BombHurtTime;
+    public float RepairTime;
 
     [Header("音效管理")]
     public AudioSource PlayerAudioSource;
@@ -50,6 +51,30 @@ public class PlayerControl : MonoBehaviour
                 BombHurtTime = 0;
             }
         }
+        if (other.gameObject.tag == "Repair")
+        {
+            if (RepairTime > 1)
+            {
+                InvokeRepeating("AddEnergy", 0, 1);
+                RepairTime = 0;
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Repair")
+        {
+            CancelInvoke("AddEnergy");
+        }
+    }
+
+    void AddEnergy()
+    {
+        if (GameObject.Find("Game Control").GetComponent<EnergyControl>().NowEnergy < GameObject.Find("Game Control").GetComponent<EnergyControl>().MaxEnergy)
+        {
+            GameObject.Find("Game Control").GetComponent<EnergyControl>().NowEnergy += 1;
+        }
     }
 
     void Start()
@@ -63,6 +88,7 @@ public class PlayerControl : MonoBehaviour
         if (_pv.IsMine)
         {
             BombHurtTime += Time.deltaTime;
+            RepairTime += Time.deltaTime;
 
             if (GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife > 0)
             {

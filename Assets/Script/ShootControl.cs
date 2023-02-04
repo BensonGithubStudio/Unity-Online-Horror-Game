@@ -252,7 +252,7 @@ public class ShootControl : MonoBehaviour
             }
 
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("SceneBorder");
+            LayerMask mask = LayerMask.GetMask("SceneBorder") + LayerMask.GetMask("Repair");
             if (Physics.Raycast(ray, out hit, 10000, ~mask))
             {
                 HitPosition = hit.point;

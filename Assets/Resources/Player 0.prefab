@@ -465,6 +465,7 @@ MonoBehaviour:
   NowLife: 0
   IsWalk: 0
   BombHurtTime: 0
+  RepairTime: 0
   PlayerAudioSource: {fileID: 6762965236755739588}
   WalkSound: {fileID: 8300000, guid: de99bda8d06f53f419a3d41fddb71d5c, type: 3}
 --- !u!54 &343112964943553156
