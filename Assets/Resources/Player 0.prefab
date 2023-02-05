@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e3064c7a236c84f8f2cd873a2ef241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameControlObject: {fileID: 0}
   playerController: {fileID: 343112964943553176}
   PlayerCamera: {fileID: 343112964951573222}
   CameraRotation: 10

@@ -33,7 +33,7 @@ public class ShootControl : MonoBehaviour
 
     [Header("射擊資料")]
     public int ShootTimes;
-    public int HitTimes;
+    public int KillTimes;
 
     [Header("超級炸彈管理")]
     public Animator SuperBulletAnimator;
@@ -158,10 +158,19 @@ public class ShootControl : MonoBehaviour
                     //發送敵人資訊
                     if (ShootPosition != null)
                     {
-                        HitTimes += 1;
-
                         int superDamage = this.gameObject.GetComponent<SuperBulletControl>().SuperDamage;
-                        HitSomebody(HitPlayerID, BulletDamage, IsSuperState, superDamage);
+                        int ShootPersonID = 0;
+                        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+                        foreach(GameObject player in players)
+                        {
+                            if (player.GetComponent<PhotonView>().IsMine)
+                            {
+                                ShootPersonID = player.GetComponent<PhotonView>().ViewID;
+                            }
+                        }
+
+                        HitSomebody(HitPlayerID, BulletDamage, IsSuperState, superDamage, ShootPersonID);
 
                         if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper < this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
                         {
@@ -196,24 +205,48 @@ public class ShootControl : MonoBehaviour
         }
     }
 
-    void HitSomebody(int id, int Damage, bool SuperState, int SuperDamage)
+    void HitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID)
     {
-        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage, SuperState, SuperDamage);
+        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage, SuperState, SuperDamage, ShootPersonID);
     }
 
     [PunRPC]
-    void RPCHitSomebody(int id, int Damage, bool SuperState, int SuperDamage)
+    void RPCHitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID)
     {
         if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
         {
             if (SuperState)
             {
                 this.gameObject.GetComponent<LifeControl>().NowLife -= SuperDamage;
+
+                if (this.gameObject.GetComponent<LifeControl>().NowLife <= SuperDamage && this.gameObject.GetComponent<LifeControl>().NowLife > 0)
+                {
+                    KillSomebody(ShootPersonID);
+                }
             }
             else
             {
                 this.gameObject.GetComponent<LifeControl>().NowLife -= Damage;
+
+                if (this.gameObject.GetComponent<LifeControl>().NowLife <= Damage && this.gameObject.GetComponent<LifeControl>().NowLife > 0)
+                {
+                    KillSomebody(ShootPersonID);
+                }
             }
+        }
+    }
+
+    void KillSomebody(int id)
+    {
+        _pv.RPC("RPCKillSomebody", RpcTarget.All, id);
+    }
+
+    [PunRPC]
+    void RPCKillSomebody(int id)
+    {
+        if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
+        {
+            KillTimes += 1;
         }
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
-using Photon.Voice;
 
 public class UIControl : MonoBehaviourPunCallbacks
 {
@@ -22,10 +21,6 @@ public class UIControl : MonoBehaviourPunCallbacks
     public GameObject FpsText;
     public GameObject MicrophoneButton;
     public GameObject TrumpetButton;
-
-    [Header("Photon Voice 砞﹚")]
-    public VoiceClient _vc;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +48,7 @@ public class UIControl : MonoBehaviourPunCallbacks
             PlayerCountText.GetComponent<Text>().text = "ヘ玡计" + PhotonNetwork.CurrentRoom.PlayerCount + "";
         }
         ShootCountText.GetComponent<Text>().text = "甮阑Ω计" + this.gameObject.GetComponent<ShootControl>().ShootTimes + "Ω";
-        HitCountText.GetComponent<Text>().text = "阑いΩ计" + this.gameObject.GetComponent<ShootControl>().HitTimes + "Ω";
+        HitCountText.GetComponent<Text>().text = "阑炳Ω计" + this.gameObject.GetComponent<ShootControl>().KillTimes + "Ω";
     }
 
     void Fps()

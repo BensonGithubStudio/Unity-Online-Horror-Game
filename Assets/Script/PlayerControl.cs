@@ -5,6 +5,9 @@ using Photon.Pun;
 
 public class PlayerControl : MonoBehaviour
 {
+    [Header("遊戲物件")]
+    public GameObject GameControlObject;
+
     [Header("相機參數")]
     public GameObject playerController;
     public GameObject PlayerCamera;
@@ -79,6 +82,8 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        GameControlObject = GameObject.Find("Game Control");
+
         MouseSentitive = StartControl.MouseSentitive;
     }
 
@@ -90,7 +95,7 @@ public class PlayerControl : MonoBehaviour
             BombHurtTime += Time.deltaTime;
             RepairTime += Time.deltaTime;
 
-            if (GameObject.Find("Game Control").GetComponent<LifeControl>().NowLife > 0)
+            if (GameControlObject.GetComponent<LifeControl>().NowLife > 0)
             {
                 PlayerMove();
                 PlayerJump();
@@ -174,7 +179,7 @@ public class PlayerControl : MonoBehaviour
         CameraRotation = Mathf.Clamp(CameraRotation, -60f, 60f);
         PlayerCamera.transform.localEulerAngles = new Vector3(-CameraRotation, PlayerCamera.transform.localEulerAngles.y, 0);
 
-        if(GameObject.Find("Game Control").GetComponent<ShootControl>().IsBigAim)
+        if(GameControlObject.GetComponent<ShootControl>().IsBigAim)
         {
             CancelInvoke("CameraFar");
             InvokeRepeating("CameraClose", 0, 0.02f);
