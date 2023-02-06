@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Voice.Unity;
+using Photon.Voice.PUN;
 
 public class UIControl : MonoBehaviourPunCallbacks
 {
@@ -21,6 +23,9 @@ public class UIControl : MonoBehaviourPunCallbacks
     public GameObject FpsText;
     public GameObject MicrophoneButton;
     public GameObject TrumpetButton;
+    public PunVoiceClient PhotonVoiceClient;
+    public Recorder PhotonRecorder;
+    public PhotonVoiceView _pvv;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +41,14 @@ public class UIControl : MonoBehaviourPunCallbacks
     void Update()
     {
         FpsCount += 1;
+
+        //Photon Voice±±¨î
+        PhotonRecorder.RecordingEnabled = CanRecord;
+        GameObject[] speakers = GameObject.FindGameObjectsWithTag("Photon Speaker");
+        foreach(GameObject speaker in speakers)
+        {
+            speaker.GetComponent<AudioSource>().mute = !CanSpeak;
+        }  
 
         if (this.gameObject.GetComponent<LifeControl>().NowLife <= 0)
         {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4008240870929933701}
   m_Layer: 0
   m_Name: Voice Speaker
-  m_TagString: Untagged
+  m_TagString: Photon Speaker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,10 +48,10 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 126
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

@@ -42004,8 +42004,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1805835820}
-  - component: {fileID: 1805835821}
   - component: {fileID: 1805835822}
+  - component: {fileID: 1805835821}
+  - component: {fileID: 1805835824}
+  - component: {fileID: 1805835823}
   m_Layer: 0
   m_Name: Photon Voice
   m_TagString: Untagged
@@ -42042,7 +42044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 1
+  ApplyDontDestroyOnLoad: 0
   runInBackground: 1
   statsResetInterval: 1000
   speakerPrefab: {fileID: 3987258409217177109, guid: 048c841652379db498ed88118fb9d84e, type: 3}
@@ -42081,7 +42083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceDetection: 0
+  voiceDetection: 1
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   interestGroup: 0
@@ -42110,6 +42112,40 @@ MonoBehaviour:
   useOnAudioFilterRead: 0
   useMicrophoneTypeFallback: 1
   recordWhenJoined: 1
+--- !u!114 &1805835823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805835819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1805835824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805835819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 8
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1813893126
 GameObject:
   m_ObjectHideFlags: 0
@@ -42938,6 +42974,10 @@ MonoBehaviour:
   FpsText: {fileID: 742163109}
   MicrophoneButton: {fileID: 1115305533}
   TrumpetButton: {fileID: 1822765922}
+  PhotonVoiceClient: {fileID: 1805835821}
+  PhotonRecorder: {fileID: 1805835822}
+  _pv: {fileID: 1805835824}
+  _pvv: {fileID: 1805835823}
 --- !u!114 &1827766735
 MonoBehaviour:
   m_ObjectHideFlags: 0
