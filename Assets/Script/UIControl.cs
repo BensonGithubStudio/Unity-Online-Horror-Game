@@ -14,6 +14,7 @@ public class UIControl : MonoBehaviourPunCallbacks
     public int FpsCount;
     public bool CanRecord;
     public bool CanSpeak;
+    public bool IsPhotonSpeaking;
 
     [Header("遊戲介面")]
     public GameObject ExitGameButton;
@@ -23,6 +24,8 @@ public class UIControl : MonoBehaviourPunCallbacks
     public GameObject FpsText;
     public GameObject MicrophoneButton;
     public GameObject TrumpetButton;
+    public GameObject MicrophoneWorking;
+    public GameObject TrumpetWorking;
     public PunVoiceClient PhotonVoiceClient;
     public Recorder PhotonRecorder;
     public PhotonVoiceView _pvv;
@@ -48,14 +51,64 @@ public class UIControl : MonoBehaviourPunCallbacks
         foreach(GameObject speaker in speakers)
         {
             speaker.GetComponent<AudioSource>().mute = !CanSpeak;
-        }  
+        }
 
+        //效果控制
+        int NotSpeakingCount = 0;
+        GameObject[] pvvs = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject pvv in pvvs)
+        {
+            if (pvv.GetComponent<PhotonView>().IsMine)
+            {
+                _pvv = pvv.GetComponent<PhotonVoiceView>();
+            }
+            else
+            {
+                if (!pvv.GetComponent<PhotonVoiceView>().IsSpeaking)
+                {
+                    NotSpeakingCount += 1;
+                }
+            }
+        }
+
+        if (NotSpeakingCount == PhotonNetwork.CurrentRoom.PlayerCount - 1)
+        {
+            IsPhotonSpeaking = false;
+        }
+        else
+        {
+            IsPhotonSpeaking = true;
+        }
+
+        if (_pvv.IsRecording && CanRecord)
+        {
+            MicrophoneButton.GetComponent<Image>().color = Color.green;
+            MicrophoneWorking.SetActive(true);
+        }
+        else
+        {
+            MicrophoneButton.GetComponent<Image>().color = Color.white;
+            MicrophoneWorking.SetActive(false);
+        }
+        if (IsPhotonSpeaking && CanSpeak)
+        {
+            TrumpetButton.GetComponent<Image>().color = Color.green;
+            TrumpetWorking.SetActive(true);
+        }
+        else
+        {
+            TrumpetButton.GetComponent<Image>().color = Color.white;
+            TrumpetWorking.SetActive(false);
+        }
+        
+        //離開遊戲按鈕顯示
         if (this.gameObject.GetComponent<LifeControl>().NowLife <= 0)
         {
             PlayerIsDead = true;
             ExitGameButton.SetActive(true);
         }
 
+        //遊戲資訊顯示
         if (PhotonNetwork.CurrentRoom != null)
         {
             PlayerCountText.GetComponent<Text>().text = "目前人數：" + PhotonNetwork.CurrentRoom.PlayerCount + "人";
