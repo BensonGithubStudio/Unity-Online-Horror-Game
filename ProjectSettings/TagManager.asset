@@ -13,6 +13,7 @@ TagManager:
   - Hurt Point
   - Repair
   - Photon Speaker
+  - Wheel
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Oil Bottle
   - Hurt Point
   - Repair
-  - 
+  - Wheel
   - 
   - 
   - 

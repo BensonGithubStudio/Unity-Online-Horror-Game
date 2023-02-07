@@ -201,6 +201,7 @@ public class ShootControl : MonoBehaviour
                 }
 
                 PhotonNetwork.Instantiate("Hit Smoke", HitPosition, Quaternion.identity);
+                PhotonNetwork.Instantiate("Shoot Smoke", ShootPosition.transform.position, Quaternion.identity);
             }
         }
     }
@@ -298,7 +299,7 @@ public class ShootControl : MonoBehaviour
                     {
                         AimStar[i].GetComponent<Image>().color = Color.red;
                     }
-
+                    
                     HitPlayerID = hit.transform.gameObject.GetComponent<PhotonView>().ViewID;
                     IsAimEnemy = true;
                 }

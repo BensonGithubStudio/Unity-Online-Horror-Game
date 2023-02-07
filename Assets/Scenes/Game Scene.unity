@@ -40083,6 +40083,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817301520}
   m_CullTransparentMesh: 1
+--- !u!1 &1817360718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817360719}
+  m_Layer: 0
+  m_Name: Wheel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817360719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817360718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2045609468}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1821560725
 GameObject:
   m_ObjectHideFlags: 0
@@ -40405,18 +40436,16 @@ MonoBehaviour:
   - {fileID: 652505729}
   - {fileID: 1106968297}
   - {fileID: 532019629}
-  MaxBulletCount: 3200000032000000
+  MaxBulletCount: 32000000
   ShootSpeed:
-  - 0.1
   - 0.1
   BulletMoveSpeed:
   - 100
-  - 100
-  BulletDamage: 0200000002000000
-  MaxLife: 6400000064000000
-  MaxEnergy: 6400000064000000
-  MaxSuper: 6400000064000000
-  SuperDamage: 0a0000000a000000
+  BulletDamage: 02000000
+  MaxLife: 64000000
+  MaxEnergy: 64000000
+  MaxSuper: 64000000
+  SuperDamage: 0a000000
 --- !u!114 &1827766730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49538,6 +49567,7 @@ Transform:
   - {fileID: 839813932}
   - {fileID: 990014724}
   - {fileID: 1183549771}
+  - {fileID: 1817360719}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

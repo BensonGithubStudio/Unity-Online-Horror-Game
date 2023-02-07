@@ -38,6 +38,8 @@ public class UIControl : MonoBehaviourPunCallbacks
 
         CanRecord = false;
         CanSpeak = false;
+        MicrophoneWorking.SetActive(false);
+        TrumpetWorking.SetActive(false);
     }
 
     // Update is called once per frame
