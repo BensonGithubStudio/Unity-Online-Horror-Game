@@ -194,4 +194,19 @@ public class StartControl : MonoBehaviour
         }
         GameModeText.GetComponent<Text>().text = GameModeWord[GameMode];
     }
+
+    public void OnClickCharacterChoose()
+    {
+        ButtonAudioSource.PlayOneShot(ClickSound);
+    }
+
+    public void OnClickChooseCharacter1()
+    {
+        GameSceneManager.PlayerCharacterKind = 0;
+    }
+
+    public void OnClickChooseCharacter2()
+    {
+        GameSceneManager.PlayerCharacterKind = 1;
+    }
 }

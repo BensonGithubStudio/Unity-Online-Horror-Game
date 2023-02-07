@@ -8,6 +8,9 @@ public class PlayerControl : MonoBehaviour
     [Header("遊戲物件")]
     public GameObject GameControlObject;
 
+    [Header("角色本身")]
+    public GameObject[] PlayerMeshRender;
+
     [Header("相機參數")]
     public GameObject playerController;
     public GameObject PlayerCamera;
@@ -85,6 +88,21 @@ public class PlayerControl : MonoBehaviour
         GameControlObject = GameObject.Find("Game Control");
 
         MouseSentitive = StartControl.MouseSentitive;
+
+        if (_pv.IsMine)
+        {
+            foreach(GameObject m in PlayerMeshRender)
+            {
+                if (m.GetComponent<MeshRenderer>() != null)
+                {
+                    m.GetComponent<MeshRenderer>().enabled = false;
+                }
+                if (m.GetComponent<SphereCollider>() != null)
+                {
+                    m.GetComponent<SphereCollider>().enabled = false;
+                }
+            }
+        }
     }
 
     // Update is called once per frame

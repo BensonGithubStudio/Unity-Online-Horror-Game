@@ -9,7 +9,7 @@ public class GameSceneManager : MonoBehaviour
     public AudioSource BackgroundMusicAudioSource;
 
     public string[] PlayerCharacter;
-    public int PlayerCharacterKind;
+    public static int PlayerCharacterKind;
     public GameObject[] StartPosition;
 
     [Header("角色初始值設定")]
