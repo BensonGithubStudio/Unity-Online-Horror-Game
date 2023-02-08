@@ -15,6 +15,7 @@ public class UIControl : MonoBehaviourPunCallbacks
     public bool CanRecord;
     public bool CanSpeak;
     public bool IsPhotonSpeaking;
+    public int PlayerNumber;
 
     [Header("遊戲介面")]
     public GameObject ExitGameButton;
@@ -22,6 +23,7 @@ public class UIControl : MonoBehaviourPunCallbacks
     public GameObject ShootCountText;
     public GameObject HitCountText;
     public GameObject FpsText;
+    public GameObject PlayerNumberText;
     public GameObject MicrophoneButton;
     public GameObject TrumpetButton;
     public GameObject MicrophoneWorking;
@@ -55,13 +57,14 @@ public class UIControl : MonoBehaviourPunCallbacks
             speaker.GetComponent<AudioSource>().mute = !CanSpeak;
         }
 
-        //效果控制
+        //效果控制及取得玩家Photon View代碼
         int NotSpeakingCount = 0;
         GameObject[] pvvs = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject pvv in pvvs)
         {
             if (pvv.GetComponent<PhotonView>().IsMine)
             {
+                PlayerNumber = pvv.GetComponent<PhotonView>().ViewID;
                 _pvv = pvv.GetComponent<PhotonVoiceView>();
             }
             else
@@ -109,6 +112,17 @@ public class UIControl : MonoBehaviourPunCallbacks
             PlayerIsDead = true;
             ExitGameButton.SetActive(true);
         }
+        else
+        {
+            if (this.gameObject.GetComponent<MouseControl>().CanAppear)
+            {
+                ExitGameButton.SetActive(true);
+            }
+            else
+            {
+                ExitGameButton.SetActive(false);
+            }
+        }
 
         //遊戲資訊顯示
         if (PhotonNetwork.CurrentRoom != null)
@@ -117,6 +131,7 @@ public class UIControl : MonoBehaviourPunCallbacks
         }
         ShootCountText.GetComponent<Text>().text = "射擊次數：" + this.gameObject.GetComponent<ShootControl>().ShootTimes + "次";
         HitCountText.GetComponent<Text>().text = "擊殺次數：" + this.gameObject.GetComponent<ShootControl>().KillTimes + "次";
+        PlayerNumberText.GetComponent<Text>().text = "　#" + PlayerNumber;
     }
 
     void Fps()

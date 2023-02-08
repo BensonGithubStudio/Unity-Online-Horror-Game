@@ -52,6 +52,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 7;
+            //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable (){{"CustomProperties", "Seven Players"} };
 
             PhotonNetwork.CreateRoom(name, roomOptions);
         }
@@ -62,6 +63,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 2;
+            //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "CustomProperties", "Two Players" } };
 
             PhotonNetwork.CreateRoom(name, roomOptions);
         }
@@ -72,6 +74,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 4;
+            //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "CustomProperties", "Four Players" } };
 
             PhotonNetwork.CreateRoom(name, roomOptions);
         }
@@ -82,6 +85,7 @@ public class StartManager : MonoBehaviourPunCallbacks
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 6;
+            //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "CustomProperties", "Six Players" } };
 
             PhotonNetwork.CreateRoom(name, roomOptions);
         }

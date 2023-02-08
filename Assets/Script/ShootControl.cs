@@ -145,7 +145,7 @@ public class ShootControl : MonoBehaviour
     //玩家射擊動作
     void Shoot()
     {
-        if (NowBulletCount > 0 && !IsAddingBullet)
+        if (NowBulletCount > 0 && !IsAddingBullet && !this.gameObject.GetComponent<MouseControl>().CanAppear)
         {
             //發射子彈
             NowBulletCount -= 1;
