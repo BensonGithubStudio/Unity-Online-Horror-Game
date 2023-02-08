@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class StoryControl : MonoBehaviour
+public class StoryControl : MonoBehaviourPunCallbacks
 {
     public AudioSource MusicAudioSource;
     public AudioSource ClickButtonAudioSource;
@@ -36,6 +38,12 @@ public class StoryControl : MonoBehaviour
     void ChangeToGameScene()
     {
         MusicAudioSource.volume = 0;
+        SceneManager.LoadScene("Start Scene");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        StartControl.IsDisconnected = true;
         SceneManager.LoadScene("Start Scene");
     }
 }

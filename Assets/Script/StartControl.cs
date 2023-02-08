@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class StartControl : MonoBehaviour
 {
+    [Header("網路中斷管理")]
+    public GameObject PhotonDisconnectedHint;
+    public static bool IsDisconnected;
+
     [Header("聲音管理")]
     public AudioSource MusicAudioSource;
     public AudioSource ButtonAudioSource;
@@ -36,6 +41,7 @@ public class StartControl : MonoBehaviour
     void Start()
     {
         Invoke("PlayMusic", 2.6f);
+        PhotonDisconnectedHint.SetActive(false);
 
         MusicSlider.value = MusicVolume;
         SoundSlider.value = SoundVolume;
@@ -53,6 +59,12 @@ public class StartControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //網路中斷判斷
+        if (IsDisconnected)
+        {
+            PhotonDisconnectedHint.SetActive(true);
+        }
+
         //聲音設定
         MusicVolume = MusicSlider.value;
         MusicAudioSource.volume = MusicVolume;
@@ -208,5 +220,12 @@ public class StartControl : MonoBehaviour
     public void OnClickChooseCharacter2()
     {
         GameSceneManager.PlayerCharacterKind = 1;
+    }
+
+    public void OnClickReloadGame()
+    {
+        IsDisconnected = false;
+        StartEffect.IsFirstTimePlay = true;
+        SceneManager.LoadScene("Start Scene");
     }
 }

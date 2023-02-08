@@ -75,14 +75,16 @@ public class UIControl : MonoBehaviourPunCallbacks
                 }
             }
         }
-
-        if (NotSpeakingCount == PhotonNetwork.CurrentRoom.PlayerCount - 1)
+        if (PhotonNetwork.CurrentRoom != null)
         {
-            IsPhotonSpeaking = false;
-        }
-        else
-        {
-            IsPhotonSpeaking = true;
+            if (NotSpeakingCount == PhotonNetwork.CurrentRoom.PlayerCount - 1)
+            {
+                IsPhotonSpeaking = false;
+            }
+            else
+            {
+                IsPhotonSpeaking = true;
+            }
         }
 
         if (_pvv.IsRecording && CanRecord)

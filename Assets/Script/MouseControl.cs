@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class MouseControl : MonoBehaviour
+public class MouseControl : MonoBehaviourPunCallbacks
 {
     public bool CanAppear;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -47,5 +43,11 @@ public class MouseControl : MonoBehaviour
         {
             CanAppear = true;
         }
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        CanAppear = true;
+        StartControl.IsDisconnected = true;
     }
 }

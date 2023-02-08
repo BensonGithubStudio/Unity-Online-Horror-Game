@@ -95,4 +95,9 @@ public class StartManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("Game Scene");
     }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        StartControl.IsDisconnected = true;
+    }
 }
