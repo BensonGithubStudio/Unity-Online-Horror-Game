@@ -34,6 +34,7 @@ public class ShootControl : MonoBehaviour
     [Header("射擊資料")]
     public int ShootTimes;
     public int KillTimes;
+    public GameObject KillText;
 
     [Header("超級炸彈管理")]
     public Animator SuperBulletAnimator;
@@ -170,7 +171,7 @@ public class ShootControl : MonoBehaviour
                             }
                         }
 
-                        HitSomebody(HitPlayerID, BulletDamage, IsSuperState, superDamage, ShootPersonID);
+                        HitSomebody(HitPlayerID, BulletDamage, IsSuperState, superDamage, ShootPersonID, NameControl.PlayerName);
 
                         if (this.gameObject.GetComponent<SuperBulletControl>().NowSuper < this.gameObject.GetComponent<SuperBulletControl>().MaxSuper)
                         {
@@ -206,13 +207,13 @@ public class ShootControl : MonoBehaviour
         }
     }
 
-    void HitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID)
+    void HitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID, string ShootPersonName)
     {
-        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage, SuperState, SuperDamage, ShootPersonID);
+        _pv.RPC("RPCHitSomebody", RpcTarget.All, id, Damage, SuperState, SuperDamage, ShootPersonID, ShootPersonName);
     }
 
     [PunRPC]
-    void RPCHitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID)
+    void RPCHitSomebody(int id, int Damage, bool SuperState, int SuperDamage, int ShootPersonID, string ShootPersonName)
     {
         if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
         {
@@ -222,7 +223,10 @@ public class ShootControl : MonoBehaviour
 
                 if (this.gameObject.GetComponent<LifeControl>().NowLife <= SuperDamage && this.gameObject.GetComponent<LifeControl>().NowLife > 0)
                 {
-                    KillSomebody(ShootPersonID);
+                    KillText.SetActive(true);
+                    KillText.GetComponent<Text>().text = "你被 " + ShootPersonName + " 擊殺了";
+                    Invoke("KillSomeBodyText", 5);
+                    KillSomebody(ShootPersonID, NameControl.PlayerName);
                 }
             }
             else
@@ -231,24 +235,35 @@ public class ShootControl : MonoBehaviour
 
                 if (this.gameObject.GetComponent<LifeControl>().NowLife <= Damage && this.gameObject.GetComponent<LifeControl>().NowLife > 0)
                 {
-                    KillSomebody(ShootPersonID);
+                    KillText.SetActive(true);
+                    KillText.GetComponent<Text>().text = "你被 " + ShootPersonName + " 擊殺了";
+                    Invoke("KillSomeBodyText", 5);
+                    KillSomebody(ShootPersonID, NameControl.PlayerName);
                 }
             }
         }
     }
 
-    void KillSomebody(int id)
+    void KillSomebody(int id, string myName)
     {
-        _pv.RPC("RPCKillSomebody", RpcTarget.All, id);
+        _pv.RPC("RPCKillSomebody", RpcTarget.All, id, myName);
     }
 
     [PunRPC]
-    void RPCKillSomebody(int id)
+    void RPCKillSomebody(int id, string myName)
     {
         if (PhotonView.Find(id).GetComponent<PhotonView>().IsMine)
         {
             KillTimes += 1;
+            KillText.GetComponent<Text>().text = "你擊殺了 " + myName;
+            KillText.SetActive(true);
+            Invoke("KillSomeBodyText", 5);
         }
+    }
+
+    void KillSomeBodyText()
+    {
+        KillText.SetActive(false);
     }
 
     void BulletCount()

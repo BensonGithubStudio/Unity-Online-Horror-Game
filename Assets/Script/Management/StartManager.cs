@@ -38,9 +38,12 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartGame()
     {
-        StartButton.GetComponent<Button>().interactable = false;
-        ButtonAudioSource.PlayOneShot(ClickSound);
-        PhotonNetwork.JoinRandomRoom();
+        if (NameControl.PlayerName != null)
+        {
+            StartButton.GetComponent<Button>().interactable = false;
+            ButtonAudioSource.PlayOneShot(ClickSound);
+            PhotonNetwork.JoinRandomRoom();
+        }
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
