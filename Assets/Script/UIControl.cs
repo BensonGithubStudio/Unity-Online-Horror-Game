@@ -87,7 +87,7 @@ public class UIControl : MonoBehaviourPunCallbacks
             }
         }
 
-        if (_pvv.IsRecording && CanRecord)
+        if (_pvv != null && _pvv.IsRecording && CanRecord)
         {
             MicrophoneButton.GetComponent<Image>().color = Color.green;
             MicrophoneWorking.SetActive(true);
