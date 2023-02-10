@@ -65,6 +65,19 @@ public class StartControl : MonoBehaviour
             PhotonDisconnectedHint.SetActive(true);
         }
 
+        //全螢幕控制
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Screen.fullScreen)
+            {
+                Screen.fullScreen = false;
+            }
+            else
+            {
+                Screen.fullScreen = true;
+            }
+        }
+
         //聲音設定
         MusicVolume = MusicSlider.value;
         MusicAudioSource.volume = MusicVolume;

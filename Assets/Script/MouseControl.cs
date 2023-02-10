@@ -7,7 +7,7 @@ using Photon.Realtime;
 public class MouseControl : MonoBehaviourPunCallbacks
 {
     public bool CanAppear;
-
+    
     // Update is called once per frame
     void Update()
     {

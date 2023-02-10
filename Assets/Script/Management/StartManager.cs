@@ -15,12 +15,14 @@ public class StartManager : MonoBehaviourPunCallbacks
     public GameObject SettingUI;
     public Animator SettingAnimator;
     public GameObject AboutUI;
+    public GameObject NeedToInputNameHint;
 
     // Start is called before the first frame update
     void Start()
     {
         SettingUI.SetActive(false);
         AboutUI.SetActive(false);
+        NeedToInputNameHint.SetActive(false);
 
         PhotonNetwork.AutomaticallySyncScene = true;
 
@@ -38,11 +40,17 @@ public class StartManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartGame()
     {
-        if (NameControl.PlayerName != null)
+        if (NameControl.PlayerName != null && NameControl.PlayerName != "")
         {
             StartButton.GetComponent<Button>().interactable = false;
             ButtonAudioSource.PlayOneShot(ClickSound);
             PhotonNetwork.JoinRandomRoom();
+        }
+        else
+        {
+            NeedToInputNameHint.SetActive(false);
+            NeedToInputNameHint.SetActive(true);
+            ButtonAudioSource.PlayOneShot(ClickSound);
         }
     }
 
