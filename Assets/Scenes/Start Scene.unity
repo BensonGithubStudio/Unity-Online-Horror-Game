@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012961982, g: 0.001229203, b: 0.0011860332, a: 1}
+  m_IndirectSpecularColor: {r: 0.0009774461, g: 0.00096010644, b: 0.00096898753, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19502,7 +19502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &305658784
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44899,19 +44899,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 365923942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1262523059}
-        m_TargetAssemblyTypeName: StartControl, Assembly-CSharp
-        m_MethodName: OnClickModeChoose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1462680112
 GameObject:
   m_ObjectHideFlags: 0

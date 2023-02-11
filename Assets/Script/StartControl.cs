@@ -96,6 +96,12 @@ public class StartControl : MonoBehaviour
     public void OnClickInputIntroduce()
     {
         ButtonAudioSource.PlayOneShot(ClickSound);
+        Invoke("ChangeToIntroduceScene", 0.5f);
+    }
+
+    void ChangeToIntroduceScene()
+    {
+        SceneManager.LoadScene("Introduce Scene");
     }
 
     public void OnClickStory()
@@ -227,16 +233,19 @@ public class StartControl : MonoBehaviour
 
     public void OnClickChooseCharacter1()
     {
+        ButtonAudioSource.PlayOneShot(ClickSound);
         GameSceneManager.PlayerCharacterKind = 0;
     }
 
     public void OnClickChooseCharacter2()
     {
+        ButtonAudioSource.PlayOneShot(ClickSound);
         GameSceneManager.PlayerCharacterKind = 1;
     }
 
     public void OnClickReloadGame()
     {
+        ButtonAudioSource.PlayOneShot(ClickSound);
         IsDisconnected = false;
         StartEffect.IsFirstTimePlay = true;
         SceneManager.LoadScene("Start Scene");
