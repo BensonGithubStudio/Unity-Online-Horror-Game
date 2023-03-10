@@ -14,9 +14,12 @@ public class IntroduceControl : MonoBehaviour
     public Animator IntroduceUIAnimator;
     public GameObject LastStepButton;
     public GameObject NextStepButton;
+    public float PressTime;
 
     void Update()
     {
+        PressTime += Time.deltaTime;
+
         if (IntroduceUIAnimator.GetInteger("Step") > 0)
         {
             LastStepButton.SetActive(true);
@@ -50,8 +53,10 @@ public class IntroduceControl : MonoBehaviour
     public void OnClickNextStep()
     {
         ButtonAudioSource.PlayOneShot(ButtonSound);
-        if (IntroduceUIAnimator.GetInteger("Step") < 4)
+
+        if (IntroduceUIAnimator.GetInteger("Step") < 4 && PressTime > 0.5f)
         {
+            PressTime = 0;
             IntroduceUIAnimator.SetInteger("Step", IntroduceUIAnimator.GetInteger("Step") + 1);
         }
     }
@@ -60,8 +65,9 @@ public class IntroduceControl : MonoBehaviour
     {
         ButtonAudioSource.PlayOneShot(ButtonSound);
 
-        if (IntroduceUIAnimator.GetInteger("Step") > 0)
+        if (IntroduceUIAnimator.GetInteger("Step") > 0 && PressTime > 0.5f)
         {
+            PressTime = 0;
             IntroduceUIAnimator.SetInteger("Step", IntroduceUIAnimator.GetInteger("Step") - 1);
         }
     }
